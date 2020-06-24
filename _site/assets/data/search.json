@@ -1,0 +1,83 @@
+[
+  
+   
+      {
+        "title"    : "Bài viết số 4",
+        "category" : "",
+        "tags"     : " experiences, make, blog",
+        "url"      : "/2020/07/03/viet.html",
+        "date"     : "July 3, 2020",
+        "excerpt"  : "<p>Chưa biết viết gì</p>\n",
+        "content"  : "<p>Chưa biết viết gì</p>\n"
+      } ,
+   
+      {
+        "title"    : "Bài viết số 3",
+        "category" : "",
+        "tags"     : " experiences, make, blog",
+        "url"      : "/2020/07/01/viet.html",
+        "date"     : "July 1, 2020",
+        "excerpt"  : "<p>Sẽ viết</p>\n",
+        "content"  : "<p>Sẽ viết</p>\n"
+      } ,
+   
+      {
+        "title"    : "Bài viết số 2",
+        "category" : "",
+        "tags"     : " experiences, make, blog",
+        "url"      : "/2020/06/30/chua-biet-viet-gi.html",
+        "date"     : "June 30, 2020",
+        "excerpt"  : "<p>Chưa viết</p>\n",
+        "content"  : "<p>Chưa viết</p>\n"
+      } ,
+   
+      {
+        "title"    : "Lần đầu tạo blog, mọi thứ rất thú vị!",
+        "category" : "",
+        "tags"     : " experiences, make, blog",
+        "url"      : "/2020/06/26/loi-noi-dau.html",
+        "date"     : "June 26, 2020",
+        "excerpt"  : "<p>Tôi sẽ kể về mấy tuần trầy trật với Git, Jekyll và KaTeX.</p>\n",
+        "content"  : "<p>Tôi sẽ kể về mấy tuần trầy trật với Git, Jekyll và KaTeX.</p>\n"
+      } 
+   
+   ,
+   
+     {
+       
+          "title"    : "Tower of Hanoi",
+          "category" : "",
+          "tags"     : " ",
+          "url"      : "/portfolio/hanoi",
+          "date"     : "January 1, 2020",
+          "excerpt"  : "<p><img src=\"/assets/img/portfolio/toh.png\" alt=\"image\" />\nPhần này tôi chưa làm, chỉ để cho đẹp.</p>\n\n",
+          "content"  : "<p><img src=\"/assets/img/portfolio/toh.png\" alt=\"image\" />\nPhần này tôi chưa làm, chỉ để cho đẹp.</p>\n\n"
+       
+     } ,
+   
+     {
+       
+          "title"    : "Tic tac toe",
+          "category" : "",
+          "tags"     : " ",
+          "url"      : "/portfolio/tictactoe",
+          "date"     : "April 1, 2020",
+          "excerpt"  : "<p>Phần này tôi chưa làm, chỉ để cho đẹp.</p>\n\n",
+          "content"  : "<p>Phần này tôi chưa làm, chỉ để cho đẹp.</p>\n\n"
+       
+     } ,
+   
+     {
+       
+          "title"    : "My Blog",
+          "category" : "",
+          "tags"     : " ",
+          "url"      : "/portfolio/jekyllblog",
+          "date"     : "June 24, 2020",
+          "excerpt"  : "<p>Tôi sẽ nói về khó khăn gặp phải khi tạo Blog này với Jekyll.</p>\n\n",
+          "content"  : "<p>Tôi sẽ nói về khó khăn gặp phải khi tạo Blog này với Jekyll.</p>\n\n"
+       
+     } 
+   
+  
+]

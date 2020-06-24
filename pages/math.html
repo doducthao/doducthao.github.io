@@ -1,0 +1,61 @@
+---
+layout: page
+title: Math
+subtitle: "Về Giải tích, Đại số và Xác suất Thống kê"
+permalink: /math/
+feature-img: "assets/img/pexels/search-map.jpeg"
+---
+
+{% for cat in site.math-list %}
+{% unless cat == 'personal writing' %}
+<div class=coll2>
+<h3> {{ cat }} </h3>
+<ol>
+  {% for page in site.math %}
+      {% for pc in page.categories %}
+        {% if pc == cat %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+        {% endif %}   <!-- cat-match-p -->
+      {% endfor %}  <!-- page-category -->
+  {% endfor %}  <!-- page -->
+</ol>
+</div>
+{% endunless %}
+{% endfor %}  <!-- cat -->
+
+<!--  {% for post in site.academic_notes %}
+    <li>
+      <h3><a href="{{ post.url }}">{{ post.title }}</a> </h3> {{ post.date | date_to_string }} - {{ post.author }} 
+    </li>
+  {% endfor %}
+-->
+
+
+<style>
+.coll {
+    float: left;
+    width: 33.33%;
+    padding-bottom: 50px;
+}
+.coll2 {
+    float: left;
+    width: 49.9%;
+    padding-bottom: 50px;
+}
+.coll4 {
+    float: left;
+    width: 24.9%;
+    padding-bottom: 50px;
+}
+.coll5 {
+    float: left;
+    width: 19.99%;
+    padding-bottom: 50px;
+}
+/* Clear floats after the columns */
+.roww:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>

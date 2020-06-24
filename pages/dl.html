@@ -1,0 +1,55 @@
+---
+layout: page
+title: Deep Learning
+subtitle: "Trước mắt là về Neural Networks và GAN"
+permalink: /dl/
+feature-img: "assets/img/net.jpg"
+---
+
+{% for cat in site.dl-list %}
+{% unless cat == 'personal writing' %}
+<div class=coll2>
+<h2 color=blue> {{ cat }} </h2>
+<ol>
+  {% for page in site.dl %}
+      {% for pc in page.categories %}
+        {% if pc == cat %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+        {% endif %}   <!-- cat-match-p -->
+      {% endfor %}  <!-- page-category -->
+  {% endfor %}  <!-- page -->
+</ol>
+</div>
+{% endunless %}
+{% endfor %}  <!-- cat -->
+
+
+
+<style>
+.coll {
+    float: left;
+    width: 33.33%;
+    padding-bottom: 50px;
+}
+.coll2 {
+    float: left;
+    width: 49.9%;
+    padding-bottom: 50px;
+}
+.coll4 {
+    float: left;
+    width: 24.9%;
+    padding-bottom: 50px;
+}
+.coll5 {
+    float: left;
+    width: 19.99%;
+    padding-bottom: 50px;
+}
+/* Clear floats after the columns */
+.roww:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
