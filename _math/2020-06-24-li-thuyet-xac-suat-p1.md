@@ -153,7 +153,7 @@ Bài đã hơi dài và nhàm chán, tôi sẽ viết tiếp ở bài sau để 
 Cảm ơn bạn đã quan tâm đọc đến đây. Mến chào bạn.
 
 # Tài liệu tham khảo
-[Timeline_of_probability_and_statistics](https://en.wikipedia.org/wiki/Timeline_of_probability_and_statistics)
-- [xs](https://vi.wikipedia.org/wiki/X%C3%A1c_su%E1%BA%A5t)
+1. [Timeline of probability and statistics](https://en.wikipedia.org/wiki/Timeline_of_probability_and_statistics)
+2. [Axioms of Prob](https://en.wikipedia.org/wiki/Probability_axioms)
 
 <!-- {% include citation.html key="highlight" %} -->
