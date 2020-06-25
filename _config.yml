@@ -63,7 +63,7 @@ theme_settings:
 
   # Scripts / Features 
   google_analytics: "UA-170333390-1" # Tracking ID, e.g. "UA-000000-01"
-  disqus_shortname: "doducthao"
+  disqus_shortname: doducthao
   katex: false # Enable if using math markup
   
   special_page:
