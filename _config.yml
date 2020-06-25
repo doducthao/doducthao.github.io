@@ -17,7 +17,7 @@ theme_settings:
 
   # Header and footer text
   header_text: > #two or three lines to describe your site
-   Let take a deep breath    
+   Let's take a deep breath    
   header_text_feature_image: assets/img/simple/simple2.jpg #assets/img/pexels/triangular.jpeg
   footer_text: >
     I am a -.-. .... .-. .. ... - .. .- -.
@@ -57,7 +57,7 @@ theme_settings:
     pinterest:
     pocket:
     reddit:
-    linkedin: true
+    linkedin:
     wordpress: true
     email:
 
@@ -132,6 +132,6 @@ relative_links:
   collections: true
 #theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
 exclude: ["Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", "LICENSE", "README.md", "screenshot.png", "package.json", "node_modules", "gulpfile.js", ".idea/*"]
-timezone: UTC+07.00
+timezone: GMT+7.00 Asia/Saigon (ICT)
 future: true 
 
