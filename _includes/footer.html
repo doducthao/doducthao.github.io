@@ -1,35 +1,34 @@
-{% if site.theme_settings.footer_text %}
 <footer class="site-footer">
-    <p class="text">{{ site.theme_settings.footer_text }}</p>
+    <p class="text">
+        {{ site.footer_text | default: "Powered by <a href='https://jekyllrb.com/'>Jekyll</a> with <a href='https://github.com/sylhare/Type-on-Strap'>Type on Strap</a>" }}</p>
             <div class="footer-icons">
                 <ul>
                 <!-- Social icons from Font Awesome, if enabled -->
                 {% include icons.html %}
                 </ul>
             </div>
-    <!-- Default Statcounter code for Tu Hoc AI
+     <!-- Default Statcounter code for Tu Hoc AI
     https://doducthao.github.io/ -->
     <script type="text/javascript">
-    var sc_project=12347645; 
-    var sc_invisible=0; 
-    var sc_security="327b8552"; 
-    var sc_text=2; 
-    var sc_https=1; 
-    var scJsHost = "https://";
-    document.write("<sc"+"ript type='text/javascript' src='" +
-    scJsHost+
-    "statcounter.com/counter/counter.js'></"+"script>");
+        var sc_project=12347645; 
+        var sc_invisible=0; 
+        var sc_security="327b8552"; 
+        var sc_text=2; 
+        var sc_https=1; 
+        var scJsHost = "https://";
+        document.write("<sc"+"ript type='text/javascript' src='" +
+        scJsHost+
+        "statcounter.com/counter/counter.js'></"+"script>");
     </script>
-    <noscript><div class="statcounter"><a title="web counter"
-    href="https://statcounter.com/" target="_blank"><img
-    class="statcounter"
-    src="https://c.statcounter.com/12347645/0/327b8552/0/"
-    alt="web counter"></a></div></noscript>
-    <!-- End of Statcounter Code -->
-    <a href="https://statcounter.com/p12347645/?guest=1">Total
-    visits</a>
+        <noscript><div class="statcounter"><a title="web counter"
+        href="https://statcounter.com/" target="_blank"><img
+        class="statcounter"
+        src="https://c.statcounter.com/12347645/0/327b8552/0/"
+        alt="web counter"></a></div></noscript>
+        <!-- End of Statcounter Code -->
+        <a href="https://statcounter.com/p12347645/?guest=1">Total visits
+        </a>
 </footer>
-{% endif %}
 
 
 

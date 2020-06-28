@@ -2,6 +2,7 @@
 layout: post
 title: Lý thuyết cơ bản của xác suất (Phần 1)
 # subtitle: ""
+color: RGB(91, 94, 166)
 excerpt_separator: 
 categories: [Probability-Statistics]
 tags: [math, prob, statistics, distribution, axioms]
