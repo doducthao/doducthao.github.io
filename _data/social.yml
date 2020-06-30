@@ -1,5 +1,5 @@
 # Icons
-rss: true  # Make sure you created a feed.xml with feed.xml layout
+rss: false  # Make sure you created a feed.xml with feed.xml layout
 email_address: "mathddt1996@gmail.com" # Full email address, e.g. "sam@example.com"
 behance:
 bitbucket:

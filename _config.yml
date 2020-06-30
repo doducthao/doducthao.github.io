@@ -33,13 +33,13 @@ share_buttons: true                                         # In _data/social.ym
 authors: true                                            # In _data/authors.yml
 language: true
   
-special_page:
-  search: 
-    icon: "search" # Assuming page link and icon are the same
-    enabled: true
-  tags:
-    icon: "tags"
-    enabled: true
+# special_page:
+#   search: 
+#     icon: "search" # Assuming page link and icon are the same
+#     enabled: true
+#   tags:
+#     icon: "tags"
+#     enabled: true
 
   # Colours, typography and padding
   # Open the "_sass > base" folder, and open "_variables.scss"
@@ -82,9 +82,9 @@ plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-relative-links]
   # - jekyll-paginate
   # - jekyll-seo-tag
   # - jekyll-relative-links
-relative_links:
-  enabled:     false
-  collections: true
+# relative_links:
+#   enabled:     true
+#   collections: true
 #theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
 exclude: ["Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", "LICENSE", "README.md", "screenshot.png", "package.json", "node_modules", "gulpfile.js", ".idea/*"]
 timezone: GMT+7.00 Asia/Saigon (ICT)
