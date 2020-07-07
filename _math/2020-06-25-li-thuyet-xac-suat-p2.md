@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lý thuyết cơ bản của xác suất (Phần 2)
+title: Lý Thuyết Cơ bản Của Xác Suất (Phần 2)
 subtitle: "(Chưa viết)"
 color: RGB(149, 82, 81)
 excerpt_separator: 
