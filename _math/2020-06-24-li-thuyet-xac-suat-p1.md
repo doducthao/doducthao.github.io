@@ -130,7 +130,7 @@ A_{i}^{'} \cap A_{k}^{'} &=\left\lbrace A_{i} \setminus\left(\bigcup_{j=1}^{i-1}
 Trong chương trình Toán lớp 11, trước khi nhắc tới xác suất, sách giáo khoa có dạy trước về hai quy tắc cơ bản: Quy tắc cộng và quy tắc nhân.
 > **Quy tắc cộng**: Nếu một công việc có thể thực hiện theo \\(n\\) cách. Trong đó cách thứ \\(i, i=\overline{1,n}\\) có \\(m_i\\) cách thực hiện thì công việc đó có thể hoàn thành trong \\(\sum_i m_i\\) cách.
 
-> **Quy tắc nhân**: Nếu một công việc có \\(n\\) nhiệm vụ cần hoàn thành. Trong đó nhiệm vụ thứ \\(i, i=\overline{n}\\) có \\(m_i\\) cách thực hiện thì công việc đó có thể hoàn thành trong \\(m_{1} \times m_{2} \times \cdots \times m_{k}\\) cách. 
+> **Quy tắc nhân**: Nếu một công việc có \\(n\\) nhiệm vụ cần hoàn thành. Trong đó nhiệm vụ thứ \\(i, i=\overline{n}\\) có \\(m_i\\) cách thực hiện thì công việc đó có thể hoàn thành trong \\(\prod_i m_i\\) cách. 
 
 Tiếp đó, là khái niệm về giai thừa
 > Với \\(n\\) là số nguyên dương, \\(n!\\) (đọc là n giai thừa) được định nghĩa như sau

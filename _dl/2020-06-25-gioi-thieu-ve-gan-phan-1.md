@@ -1,16 +1,20 @@
 ---
 layout: post
-title: Giới Thiệu Về Generative Adversarial Network (GAN)
-subtitle: "Bài viết chưa hoàn chỉnh"
-color: RGB(85, 180, 176) # blue turquoise
+title: Khám phá Generative Adversarial Network (GAN)
+subtitle: "Bài viết vẫn sẽ được cập nhật"
+# color: RGB(85, 180, 176) # blue turquoise
+color: RGB(149, 82, 81) # marsala
 excerpt_separator: <!--more -->
 categories: [GAN]
 tags: [network, gan, introduce, generative, discriminative, adversarial]
-date: June 25, 2020 
-author: doducthao
+date: July 11, 2020 
+# author: doducthao
 comments: true
 mathjax: true
 ---
+*If you can make a classifier learn the difference between cats and dogs, you can make a classifier that distinguishes between pictures that are real and pictures that are generated.*
+
+Tôi không rõ ai là tác giả của câu nói này, có lẽ đó là một câu nói phổ thông mà bất kỳ ai cũng có thể nói ra, tôi xin mượn lại để bắt đầu một series vô cùng thú vị.
 
 **Nội dung bài viết**
 
@@ -20,10 +24,18 @@ Thuật ngữ chuyên ngành
 
 | Thuật ngữ                          | Bản dịch tạm           |
 |:----------------------------------:|:----------------------:|
+| Unsupervised Learning              | Học không giám sát     |
 | GAN                                | Mạng chống đối tạo sinh|
 | Generative model                   | Mô hình sinh           |
+| Generator                          | Bộ sinh                |
 | Discriminative model               | Mô hình phân biệt      |
-| Convolutional Neural Network (CNN) | Mạng nơ ron tích chập  |
+| Discriminator                      | Bộ phân biệt           |
+| Latent space                       | Không gian ngầm ẩn     |
+| Encoder, Decoder                   | Bộ mã hóa, Bộ giải mã  |
+| Virtual training criterion         | Mục tiêu huấn luyện ảo |
+| Nash Equilibrium                   | Cân bằng Nash          |
+| Zeros-sum games                    | Trò chơi có tổng bằng 0|
+
 
 # Một cái nhìn tổng quan
 ## GAN là gì ?
@@ -35,7 +47,7 @@ Muốn nghe giảng về GAN từ chính cha đẻ của nó, xin mời bạn xe
 
 GAN dịch ra tiếng Việt là `Mạng Chống Đối Tạo Sinh`, là một thuật toán Unsupervised Learning được sinh ra với kỳ vọng tạo ra được những hệ thống có độ chính xác cao mà cần ít hoạt động của con người trong khâu huấn luyện.
 
-Đây cơ bản là một mạng (network) được xây dựng bằng cách kết hợp nhiều mô hình trong Deep Learning, mà chút nữa ta sẽ đi sâu vào bàn luận. Sơ qua thì các mô hình này giống như Kakalot và Vegeta đánh nhau suốt cả đời vậy, khi trình độ của người này tăng lên thì người kia sẽ lại *try hard* để đấu tiếp, kết quả là sức mạnh của hai người không ngừng tăng lên, có thể nói họ là một **đôi bạn cùng tiến** vậy. 
+Đây cơ bản là một mạng (network) được xây dựng bằng cách kết hợp nhiều mô hình trong Deep Learning, mà chút nữa ta sẽ đi sâu vào bàn luận. Sơ qua thì các mô hình này giống như Kakalot và Vegeta đánh nhau suốt cả đời vậy, khi trình độ của người này tăng lên thì người kia sẽ lại *try hard* để đấu tiếp, kết quả là sức mạnh của hai người không ngừng tăng lên, có thể nói họ là một **cặp kỳ phùng địch thủ**. 
 
 {% include aligner.html images="dl_posts/gan/kakalot.jpg" %}
 
@@ -80,6 +92,10 @@ Bạn có thể xem [video](https://www.youtube.com/watch?time_continue=43&v=ehD
 
 # Đi sâu vào khám phá GAN
 Ở phần này, tôi sẽ chỉ tập trung khám phá GAN nguyên thủy, tức là GAN trong bài báo đầu tiên của Ian Goodfellow. Khi có thời gian, tôi sẽ tiếp tục viết về các mô hình khác trong hệ sinh thái GANs với những cấu trúc toán học trong đó.
+
+Ý tưởng quan trong nhất trong GAN liên quan đến một định lý nổi tiếng, của một nhà toán học có ảnh hưởng lớn trong thế kỷ trước: [John Nash](https://vi.wikipedia.org/wiki/John_Forbes_Nash_Jr.), ông là nhà toán học duy nhất từ trước đến nay được trao giải Nobel về kinh tế.
+
+Nếu có thời gian, tôi khuyến khích bạn nên coi phim này: [A beautiful mind](https://www.imdb.com/title/tt0268978/?ref_=vp_back), đây là một bộ phim tiểu sử năm 2001 của Mỹ kể về cuộc đời của ông. Bộ phim được đạo diễn bởi Ron Howard và biên kịch là Akiva Goldsman. Cảm hứng làm phim được lấy từ một cuốn sách cùng tên rất nổi tiếng của nhà văn Sylvia Nasar, người từng được đề cử Giải Pulitzer năm 1988.
 
 ## Minimax game
 **Lưu ý:** Phần đầu sẽ trình bày qua ví dụ để hiểu về Minimax, phần sau sẽ đi sâu vào các chứng minh thuần túy.
@@ -160,7 +176,7 @@ Ví dụ, xét bảng chi trả của hai người chơi (player \\(A\\): hàng,
 Rõ ràng lựa chọn Minimax cho người chơi \\(A\\) là chiến lược \\(2\\) (vì rủi ro nhất chỉ phải trả \\(1\\), trong khi chiến lược \\(1\\) rất có thể phải trả \\(2\\), chiến lược \\(3\\) rất có thể phải trả \\(4\\)). Tương tự, Minimax cho người chơi \\(B\\) cũng là chiến lược \\(2\\). Tuy vậy, nếu \\(B\\) tin rằng \\(A\\) sẽ chọn chiến lược \\(2\\) thì \\(B\\) sẽ chọn chiến lược \\(1\\) để được \\(1\\); sau đó \\(A\\) lại *counter* \\(B\\) bằng cách chọn chiến lược \\(1\\) để được \\(3\\); và sau đó \\(B\\) sẽ lại counter bằng cách chọn chiến lược \\(2\\); và cuối cùng cả hai người chơi sẽ nhận ra sự khó khăn khi đưa ra lựa chọn (cân bằng Nash không xảy ra). Vì vậy, một chiến lược ổn định hơn là cần thiết.
 
 Một trong hai người chơi có thể thay đổi chiến lược của họ khi đã biết trước chiến lược của người chơi khác, một chiến lược hỗn hợp có thể được xây dựng như sau
-- \\(A\\) không quan tâm đến chiến lược \\(3\\) vì có khả năng sẽ phải bạo trả đến \\(4\\) cho \\(B\\), \\(B\\) chắc chắn không bao giờ phải chọn chiến lược \\(B\\) vì nó hoàn toàn bất lợi cho \\(B\\).
+- \\(A\\) không quan tâm đến chiến lược \\(3\\) vì có khả năng sẽ phải bạo trả đến \\(4\\) cho \\(B\\), \\(B\\) cũng chắc chắn không bao giờ chọn chiến lược \\(3\\) vì nó hoàn toàn bất lợi cho \\(B\\).
 - Giả sử xác suất \\(A\\) chọn chiến lược \\(1\\) là \\(a\\) và xác suất chọn chiến lược \\(2\\) là \\((1-a)\\). Nếu \\(B\\) chọn chiến lược \\(1\\), kỳ vọng của \\(A\\) là 
 \\[3\times a-1\times(1-a) = 4a-1.\\]
 Nếu \\(B\\) chọn chiến lược \\(2\\), kỳ vọng của \\(A\\) là 
@@ -171,9 +187,9 @@ Như vậy, để tránh việc phải trả cho \\(B\\) nhiều hơn \\(\dfrac{
 
 Định lý Minimax có rất nhiều cách phát biểu, đây cũng là một trong những bài toán được nghiên cứu rất nhiều, một trong những phát biểu về định lý mà tôi tìm thấy trên wiki là
 
-> Cho \\(X\\) là lồi compact trong \\(\mathbb{R}^n\\) và \\(Y\\) là lồi compact trong \\(\mathbb{R}^m\\), cho hàm \\(f: X\times Y\rightarrow \mathbb{R}\\) là hàm liên tục. Nếu \\(f\\) là hàm lồi hoặc lõm thì
+> Cho \\(X\\) là lồi compact trong \\(\mathbb{R}^n\\) và \\(Y\\) là lồi compact trong \\(\mathbb{R}^m\\), cho hàm \\(f: X\times Y\rightarrow \mathbb{R}\\) là hàm liên tục có dạng lõm-lồi, tức là
 - \\(f(\cdot, y): X \rightarrow \mathbb{R}\\) là lõm khi cố định \\(y\\).
-- \\(f(x, \cdot): Y\rightarrow \mathbb{R}\\) là lõm khi cố định \\(x\\).
+- \\(f(x, \cdot): Y\rightarrow \mathbb{R}\\) là lồi khi cố định \\(x\\).
 Khi đó ta có \\[\max_{x} \min_{y} f(x, y)=\max_{y} \min_{x} f(x, y).\\] 
 
 Để có một cái nhìn khái quát hơn về Minimax, bạn có thể tìm hiểu thêm ở một tài liệu tổng hợp các phát biểu và chứng minh của lớp bài toán này (từ năm 1928 đến khoảng đầu những năm 2000), rất cụ thể tại [đây]({% link assets/dl_posts/gan/simons1995.pdf %}).
@@ -184,7 +200,8 @@ Bây giờ, tôi sẽ chỉ trình bày định lý Minimax theo [Von Neumman](h
 
 Ở đây, cặp chiến lược hỗn hợp \\((x,y)=((x_1,x_2,\ldots,x_m), (y_1,y_2.\ldots,y_n))\\) với \\(x, y\\) là các véc tơ xác suất tương ứng cho mỗi người chơi khi ra quyết định.
 
-> Với một cặp chiến lược hỗn hợp \\((x,y)\\), ta định nghĩa \\[V(x, y):=\sum_{i=1}^{m} \sum_{j=1}^{n} x_{i} a_{i, j} y_{j}.\\]
+> Với một cặp chiến lược hỗn hợp \\((x,y)\\), ta định nghĩa \\[V(x, y):=\sum_{i=1}^{m} \sum_{j=1}^{n} x_{i} a_{i, j} y_{j},\\]
+trong đó \\(a_{i,j}\\) là payoff tại vị trí \\((i,j)\\) trong \\(A\\). 
 
 > Một cặp chiến lược hỗn hợp \\(\left(x^{\star}, y^{\star}\right)\\) được gọi là một `điểm cân bằng` (hoặc `cặp cân bằng`), tiếng anh là `equilibrium point` (hoặc `equilibrium pair`) cho một trò chơi zero-sum hai người thỏa mãn
 \\[
@@ -227,11 +244,11 @@ v_{B} &:=\min_{y \in Y_{n}} \max_{x \in X_{m}} V(x, y) \leq \max_{x \in X_{m}} V
 \\]
 Đặt \\(x=x^{(o)}\\) và \\(y=y^{(o)}\\) trong bất đẳng thức trên, ta thấy \\(\mathbf{v}=V\left(x^{(o)}, y^{(o)}\right)\\) và do vậy \\(\left(x^{(o)}, y^{(o)}\right)\\) là một cặp cân bằng.
 
-Ta nhắc lại mà không chứng minh định lý của Brouwer
+Ta nhắc lại mà không chứng minh **định lý của Brouwer**
 > Cho \\(K \subset \mathbb{R}^{p}\\) là tập lồi, đóng, bị chặn. Khi đó nếu \\(f: K \longrightarrow K\\) liên tục thì tồn tại một \\(\hat{x} \in K\\) sao cho \\(f(\hat{x})=\hat{x}\\).
 (\\(\hat{x}\\) được gọi là điểm cố định của hàm \\(f\\)).
 
-Chứng minh định lý của Von Neumman như sau
+Chứng minh **định lý của Von Neumman** như sau
 
 **Chứng minh**
 
@@ -257,9 +274,9 @@ Tương tự như vậy, \\(y_{j}^{\prime} \geq 0\\) và \\(\sum_{j} y_{j}^{\pri
 
 Trước tiên ta chỉ ra rằng \\((\hat{x}, \hat{y})\\) là một cặp cân bằng nếu và chỉ nếu nó là điểm cố định cho ánh xạ \\(T\\).
 
-\\(\Rightarrow\\) Giả sử \\((\hat{x}, \hat{y})\\) là một cặp cân bằng. Từ định lý trước suy ra ngay \\(c_i(\hat{x}, \hat{y})=0\\) với mọi \\(i\\), do vậy \\(\hat{x_i}^{\prime}=\hat{x_i}\\) với mọi \\(i\\). Tương tự \\(\hat{y_j}^{\prime}=\hat{y_j}\\) với mọi \\(j\\). Do đó \\(T(\hat{x}, \hat{y}) = (\hat{x}, \hat{y})\\).
+\\((\Rightarrow)\\): Giả sử \\((\hat{x}, \hat{y})\\) là một cặp cân bằng. Từ định nghĩa suy ra ngay \\(c_i(\hat{x}, \hat{y})=0\\) với mọi \\(i\\), do vậy \\(\hat{x_i}^{\prime}=\hat{x_i}\\) với mọi \\(i\\). Tương tự \\(\hat{y_j}^{\prime}=\hat{y_j}\\) với mọi \\(j\\). Do đó \\(T(\hat{x}, \hat{y}) = (\hat{x}, \hat{y})\\).
 
-\\(\Leftarrow\\): Giả sử \\((\hat{x}, \hat{y})\\)  là một điểm cố định của \\(T\\). Trước tiên ta sẽ chỉ ra rằng phải có ít nhất một chỉ số \\(i_0\\) để \\(\hat{x_{i_0}}>0\\) và \\(c_i(\hat{x}, \hat{y})=0\\). 
+\\((\Leftarrow)\\): Giả sử \\((\hat{x}, \hat{y})\\)  là một điểm cố định của \\(T\\). Trước tiên ta sẽ chỉ ra rằng phải có ít nhất một chỉ số \\(i_0\\) để \\(\hat{x_{i_0}}>0\\) và \\(c_i(\hat{x}, \hat{y})=0\\). 
 
 Do \\(\displaystyle V(\hat{x},\hat{y})=\sum\limits_{i=1}^m \hat{x_i} V(\alpha_i,\hat{y})\\), ta có thể kết luận \\(V(\hat{x},\hat{y}) < V(\alpha_i, \hat{y})\\) không đúng với mọi \\(i\\) để \\(\hat{x_i} > 0\\). Suy ra tồn tại \\(i_0\\) sao cho \\(c_{i_0}(\hat{x}, \hat{y}) = V(\alpha_{i_0}, \hat{y}) - V(\hat{x}, \hat{y}) = 0\\). Nhưng khi đó, giả thiết \\((\hat{x}, \hat{y})\\) là điểm cố định của \\(T\\) suy ra 
 \\[
@@ -270,39 +287,213 @@ do đó \\(\sum_k c_k(\hat{x}, \hat{y})=0\\), lại vì \\(c_k(\hat{x}, \hat{y})
 Từ đó, chúng ta có thể kết luận rằng \\((\hat{x},\hat{y})\\) là một cặp cân bằng. Kết thúc chứng minh.
 \\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
 
-## Các mô hình trong mạng GAN
+## Cách mà GAN hoạt động
+Trong khi tìm dữ liệu để viết bài này, tôi bắt gặp một [video](https://www.youtube.com/watch?v=J1aG12dLo4I) giải thích khá dễ hiểu về cơ chế hoạt động của GAN. 
 
+Ý tưởng cơ bản của GAN là thiết lập một trò chơi hai người. Một trong số đó là `Generator`, Generator tạo ra các samples từ `latent space` (không gian ngầm, ẩn) có cùng phân phối với dữ liệu huấn luyện. Người chơi còn lại là `Discriminator`, người này đánh giá các samples và xác định xem sample là thật hay giả.
 
-### Mô hình sinh (generative)
+{% include aligner.html images="dl_posts/gan/real_fake.png" %}
 
-### Mô hình phân biệt (discriminative)
+Generator được huấn luyện để lừa Discriminator.
 
-### Đôi bạn cùng tiến
+*We can think of the generator as being like a counterfeiter, trying to make fake money, and the discriminator as being like police, trying to allow legitimate money and catch counterfeit money. To succeed in this game, the counterfeiter must learn to make money that is in-distinguishable from genuine money, and the generator network must learn to create samples that are drawn from the same distribution as the training data*.
+
+*Ta có thể nghĩ rằng Generator giống như một kẻ làm tiền giả, cố gắng tạo tiền giả, và Discriminator giống như người cảnh sát, cố gắng cho phép tiền hợp pháp và bắt tiền giả. Để thành công trong trò chơi này, người làm giả phải học cách làm tiền giả không thể phân biệt với tiền thật và Generator phải học cách tạo các mẫu được trích ra từ cùng phân phối với dữ liệu đào tạo*.
+
+Một diễn giải ngây thơ cho ví dụ này như sau: Lúc đầu, những tờ tiền giả có thể dễ dàng phát hiện ra (do tay nghề của kẻ làm tiền giả chưa cao). Sau đó, kẻ lừa đảo này sẽ phát hiện và cải tiến công nghệ, từ đó nâng cao chất lượng của tiền giả (ngày càng giống với tiền thật). Song song với điều đó, viên cảnh sát cũng học được những chi tiết mà kẻ lừa đảo cố gắng để tạo ra tiền giả (màu tờ tiền, khung viền, chất liệu giấy in, mùi thơm tờ tiền,...) Từ đó anh ta càng ngày càng giỏi trong chuyên môn chống tội phạm in tiền giả. Cho đến khi cả hai không thể *giỏi* hơn được nữa: Những tờ tiền giả được làm tốt đến mức người cảnh sát kia không tài nào phân biệt được, và kẻ làm tiền giả cũng không có thể cải tiến thêm bất kỳ điều gì cho những tờ tiền giả của hắn (*bởi vì nó quá hoàn hảo*, hắn nghĩ và cười lớn). Khi mà những kẻ trong cuộc chơi này không thể phát triển thêm điều gì để nó thú vị hơn, cân bằng Nash xảy ra.
+
+Kẻ lừa đảo lấy nguyên liệu từ đâu để làm tiền giả ?
+
+Nguyên liệu để làm tiền giả chính là nhiễu (noise), kí hiệu là \\(z\\), trong đó \\(z\\) được lấy ngẫu nhiên từ một Latent space với phân phối cho trước nào đó, có thể là phân phối chuẩn, phân phối đều,...
+
+### Latent space
+*If I have to describe latent space in one sentence, it simply means a representation of compressed data.*
+
+<!-- {% include aligner.html images="dl_posts/gan/digits.png" %} -->
+
+> Trong thống kê, `latent variables` (`Các biến tiềm ẩn`) là các biến không được quan sát trực tiếp nhưng được suy ra (thông qua mô hình toán học ) từ các biến khác được quan sát (đo trực tiếp). 
+
+Tôi không tìm được một định nghĩa chính quy của Latent space (không gian tiềm ẩn), tuy vậy tôi thấy một số *định nghĩa* sau có thể chấp nhận được, xin nêu ra để mọi người cùng tìm hiểu
+
+> 
+- Latent space là không gian của các biến tiềm ẩn.
+- Latent space đề cập đến một không gian đa chiều trừu tượng chứa các đặc trưng mà chúng ta không thể giải thích trực tiếp, nhưng mã hóa một biểu diễn bên trong có ý nghĩa của các sự kiện được quan sát bên ngoài. ([Nguồn](https://stats.stackexchange.com/questions/442352/what-is-a-latent-space))
+- Latent space đơn giản là một đại diện của dữ liệu bị nén (`compressed data`).
+
+**Một cách hiểu về Compressed data**
+
+[Auto Encoder](https://en.wikipedia.org/wiki/Autoencoder) hoạt động thông qua việc: `Encoder` (bộ mã hóa) làm giảm kích thước dữ liệu qua các layer, đưa vào một `bottleneck` layer, sau đó `Decoder` (bộ giải mã) chuyển encoded input về lại kích thước ban đầu. Compressed data chính là data thuộc vào bottleneck layer.
+
+{% include aligner.html images="dl_posts/gan/latentspace2.png" %}
+
+Ý tưởng của Latent space là quan trọng bởi vì nó là nhân tố chính của Deep Learning - học các đặc trưng của dữ liệu và đơn giản hóa các biểu diễn của dữ liệu cho mục đích tìm kiếm các mẫu.
+
+Ví dụ như trong bài toán [nhận dạng chữ số viết tay dữ liệu MNIST](https://www.kaggle.com/c/digit-recognizer/discussion/8327), ta phải huấn luyện để mô hình có thể nhận dạng được các chữ số khác nhau, cho dù chúng có thể có những đường nét khá giống nhau (chẳng hạn số \\(3\\) và số \\(8\\)). Trong lúc huấn luyện như vậy, ta đã làm cho mô hình *học được những nét tương đồng trong cấu trúc* giữa các ảnh với nhau, bằng cách tìm hiểu đặc trưng của mỗi chữ số (mỗi ảnh). Latent space có thể coi là một tập hợp các latent sample như hình dưới
+
+{% include aligner.html images="dl_posts/gan/latentspace3.png" %}
+
+### Kẻ lừa đảo (Generator) và Người cảnh sát (Discriminator)
+Để hiểu cụ thể phần này, tôi khuyến khích bạn đọc kỹ hướng dẫn trong [Deep Convolutional Generative Adversarial Network](https://www.tensorflow.org/tutorials/generative/dcgan), một tutorial trong GAN của Tensorflow.
+
+Hình dưới đây là sơ đồ cấu trúc hoạt động của GAN, để bạn có thể nắm được luồng di chuyển của data.
+
+![structure]({% link assets/dl_posts/gan/structure.png %})
+
+Về mặt ký hiệu
+\\[
+    \begin{aligned}
+        D: & \text{ Discriminator} \\\
+        G: & \text{ Generator} \\\
+        \theta_d: & \text{ Tham số của Discriminator} \\\
+        \theta_g: & \text{ Tham số của Generator} \\\
+        p_z(z) :& \text{ Phân phối của nhiễu (noise) đầu vào} \\\
+        p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\\
+        p_g(x): & \text{ Phân phối của Generator}
+    \end{aligned}
+\\]
+**Chiến lược**: Tìm \\(G\\) để \\(p_g(x) = p_{data}(x), \forall x\\). Nếu nghiệm \\(G\\) tìm được thỏa mãn phương trình trên, ta có thể mong đợi rằng \\(G\\) là một mạng neural giúp chúng ra sinh ra những dữ liệu chân thật. Cùng nhìn một [thành quả](https://miro.medium.com/max/800/0*xuZJA7BHYhVtg4Vf.gif) của GAN.
+
+Generator (\\(G)\\) hay Discriminator \\((D)\\), bản chất cũng là các mạng neural với nhiều layer.
+
+Generator nhận đầu vào là noise \\(z\\) để tạo thành fake data \\(G(z)\\), Discriminator nhận đầu vào là cả real data \\(x\\) lẫn fake data \\(G(z)\\).
+
+Ngoài ra có thể hiểu về mặt toán học:
+- \\(G: \mathbb{Z}\longrightarrow \mathbb{Y}\\) là một hàm khả vi (differentiable function) đi từ Latent space \\(\mathbb{Z}\\)vào \\(\mathbb{Y}\\), được đại diện bởi một [multilayer perceptron](https://machinelearningcoban.com/2017/02/24/mlp/) với các tham số \\(\theta_g\\). (\\(G\\) phải cần đến điều kiện khả vi là để phục vụ quá trình cập nhật trọng số thông qua lan truyền ngược [backpropagation](http://neuralnetworksanddeeplearning.com/chap2.html#:~:text=Backpropagation%20is%20about%20understanding%20how,C%2F%E2%88%82blj.). Khi có thời gian tôi sẽ viết kỹ về phần này).
+
+- \\(D:\mathbb{X}\cup\mathbb{Y}\longrightarrow [0,1]\\) là một hàm xác suất đi từ không gian \\(\mathbb{Y}\\) hoặc không gian dữ liệu thật \\(\mathbb{X}\\), đại diện bởi một multilayer perceptron với các tham số \\(\theta_d\\). \\(D(x)\\) biểu diễn một xác suất thể hiện \\(x\\) đến từ dữ liệu thật chứ không phải từ \\(p_g\\).
+
+{% include aligner.html images="dl_posts/gan/struc2.png,dl_posts/gan/struc3.png"%}
+
+Bạn có thắc mắc tại sao \\(G\\) và \\(D\\) lại nhận đầu vào như vậy không ?
+
+Câu trả lời rất đơn giản, bởi vì việc của \\(G\\) là sinh ra fake data, nên \\(G\\) đương nhiên cần nguồn nguyên liệu `fake`, tức là noise \\(z\\). Còn \\(D\\) có nhiệm vụ phân biệt real data và fake data, nên \\(D\\) phải cần đủ cả hai dữ liệu real (\\(x\\)) và \\(G(z)\\) (fake data), bởi lẽ không ai có thể nhận biết thật giả nếu không được quan sát chúng, đúng chứ ?
+
+Khi ta huấn luyện \\(G\\) thành công, \\(G\\) sẽ là một transformation như hình dưới đây.
+
+{% include aligner.html images="dl_posts/gan/G.png" %}
 
 ## Các hàm mất mát (loss function)
 
-### cross-entropy
-Phần này, tôi có viết một bài riêng, chi tiết các bạn xem ở [Entropy trong lý thuyết thông tin]({% link _dl/2020-06-26-entropy.md %}).
+Chúng ta huấn luyện \\(D\\) để maximize xác suất gán nhãn đúng cho cả mẫu huấn luyện và mẫu đến từ \\(G\\). Song song đó, ta cũng huấn luyện \\(G\\) để minimize \\(\log(1-D(G(z))\\).
 
-### Hàm mất mát của generative
+Nói một cách khác, \\(G\\) và \\(D\\) đang chơi một trò chơi minimax dành cho hai người với hàm giá trị \\(V(G,D)\\), đây cũng chính là loss function trong GAN.
 
-### Hàm mất mát của discriminative
+\\[
+    \displaystyle \min_{G} \max_{D} V(G,D) = \mathbb{E}_ {x \sim p_{data}(x) } [\log D(x)] + \mathbb{E}_ {z\sim p_{z}(z)}[\log (1-D(G(z)))].
+\\]
+Để hiểu kỹ công thức về phía bên phải dấu bằng, tôi khuyến khích bạn xem phần **Về cross-entropy trong Machine Learning**, trong bài [Entropy Trong Lý Thuyết Thông Tin]({%link _dl/2020-06-26-entropy.md %}).
 
-### Vẫn là đôi bạn cùng tiến
+Rõ ràng mục tiêu của Discriminator là maximize giá trị \\(D(x)\\) đối với những điểm dữ liệu \\(x\sim p_{data}(x)\\) và minimize \\(D(G(z))\\) đối với những điểm dữ liệu \\(z\sim p_z(z)\\), tức là maximize \\(1-D(G(z))\\). Để ý rằng \\(\max U\Leftrightarrow \max \log U, \forall 0< U \le 1\\). Do vậy, mục tiêu của \\(D\\) là maximize tổng 
+\\[\mathbb{E}_ {x \sim p_{data}(x) } [\log D(x)] + \mathbb{E}_ {z\sim p_{z}(z)}[\log (1-D(G(z)))] = V(G,D).\\]
 
-## Đôi nét về cân bằng Nash
-Phần này tôi sẽ có một bài viết riêng, chi tiết bạn xem ở [đây]({%link _dl/2020-07-02-can-bang-nash.md %})
+Ký hiệu \\(D\\) tối ưu là \\(D^*_ {G}=\operatorname{argmax}_D V(G,D)\\), với \\(G\\) cho trước. 
+
+Bây giờ, giả sử đã có \\(D = D^* _{G}\\), do mục tiêu của \\(G\\) và \\(D\\) là ngược nhau, ta tìm \\(G\\) để minimize \\(V(G,D)\\), lúc này \\(G\\) tối ưu được ký hiệu \\[G^*= \operatorname{argmin}_G V(G, D^ * _ G).\\]
+
+Ta đi chứng minh bài toán tối ưu có nghiệm duy nhất \\(G^*\\) thỏa điều kiện \\(p_g = p_{data}\\).
+
+Theo định lý Radon-Nikodym, ta có
+\\[
+\begin{aligned}
+    V(G, D) &=\int_x p_{\text {data }}(x) \log (D(x)) d x+\int_z p_z(z) \log (1-D(G(z))) d z \\\
+    &=\int_x p_{\text {data }}(x) \log (D(x))+p_g(x) \log (1-D(x)) d x
+\end{aligned}
+\\] 
+
+Với mọi \\((a,b)\in \mathbb{R}\setminus \left\lbrace (0,0)\right\rbrace\\). Xét hàm số \\(f(u) = a\log u + b\log (1-u)\\), tìm maximum của \\(f\\) đơn giản bằng đạo hàm
+\\[f^{\prime}(u)=0\Leftrightarrow \dfrac{a}{u}-\dfrac{b}{1-u}=0\Leftrightarrow u = \dfrac{a}{a+b}.\\]
+Thay \\(u\\) vừa tìm được vào đạo hàm bậc \\(2\\) của \\(f\\): \\[f^{\prime \prime}(u)=-\frac{a}{(a+b)^{2}}-\frac{b}{\left(1-\frac{a}{a+b}\right)^{2}}<0.\\]
+Từ đó \\(\dfrac{a}{a+b}\\) là maximum của \\(f\\). Do vậy \\(D(x)=\dfrac{p_{\text {data}}(x)}{p_{\text {data}}(x)+p_{g}(x)}\\) là maximum của tích phân trên.
+
+Từ đó suy ra \\(D^*_ G = \dfrac{p_{\text {data}}}{p_{\text {data}}+p_{g}}\\).
+
+Trong bài báo, \\(C(G)\\) được nhắc đến là `mục tiêu huấn luyện ảo` (`virtual training criterion`), và được ký hiệu
+
+\\[
+\begin{aligned}
+C(G) &=\max_D V(G, D) \\\
+&=\mathbb{E}_ {x \sim p_{data}} \left[\log D_G^* (x)\right]+\mathbb{E}_ {z \sim p_z}\left[\log \left(1-D_G^* (G(z))\right)\right] \\\
+&=\mathbb{E}_ {x \sim p_{data}}\left[\log D_G^* (x)\right]+\mathbb{E}_ {x \sim p_g}\left[\log \left(1-D_G^*(x)\right)\right] \\\
+&=\mathbb{E}_ {x \sim p_{data}} \left[\log \dfrac{p_{data}(x)}{p_{data}(x)+p_g(x)}\right]+\mathbb{E}_ {x \sim p_g}\left[\log \dfrac{p_g(x)}{p_{data}(x)+p_g(x)}\right]
+\end{aligned}
+\\]
+> - Với các phân phối xác suất \\(p, q\\) được định nghĩa trên cùng một không gian xác suất \\(\mathbb{X}\\), Độ đo Kullback–Leibler divergence từ \\(q\\) vào \\(p\\) được định nghĩa
+\\[\operatorname{KL}(p \\| q)=\sum_{x \in \mathbb{X}} p(x) \log \left(\dfrac{p(x)}{q(x)}\right).\\]
+- Với \\(m=\dfrac{p+q}{2}\\) là một phân phối xác suất, ta định nghĩa độ đo Jensen–Shannon divergence
+\\[\operatorname{JSD}(p \\| q)=\dfrac{1}{2} \operatorname{KL}(p \\| m)+\dfrac{1}{2} \operatorname{KL}(q \\| m).\\]
+- Độ đo Kullback–Leibler divergence không phải là một mê tríc, do đó không có tính đối xứng: \\(\operatorname{KL}(p \\| q) \ne\operatorname{KL}(q \\| p)\\).
+- Hai độ đo này đều không âm.
+- Khi độ đo bằng \\(0\\), hiển nhiên \\(p=q\\).
+- xem thêm về hai độ đo này ở [1](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) và [2](https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence).
+
+Định lý quan trọng nhất của bài báo
+> Global minimum của \\(C(G)\\) đạt được khi và chỉ khi \\(p_g = p_{data}\\). Khi đó giá trị của \\(C(G)\\) là \\(-\log 4\\).
+
+**Chứng minh**
+
+Mục tiêu của GAN là \\(p_{data} = p_g\\), khi đó \\(D^ * _G(x)= \dfrac{1}{2}\\).
+
+Nói vui: Lúc này Discriminator có đôi chút bối rối, giống như tâm trạng cô gái đến nhà bạn trai mà anh ta lại có một người anh em sinh đôi vậy, cô ấy không thể nhận ra ai mới là người yêu mình.
+
+Lúc này \\(C(G) = \log \dfrac{1}{2} + \log \dfrac{1}{2}=-\log 4\\).
+
+Mặt khác, ta biến đổi \\(C(G)\\) như sau
+\\[
+\begin{aligned}
+C(G) 
+&=\mathbb{E}_ {x \sim p_{data}} \left[(\log 2-\log 2)+\log \dfrac{p_{data}(x)}{p_{data}(x)+p_g(x)}\right]+\mathbb{E}_ {x \sim p_g}\left[(\log 2-\log 2)+\log \dfrac{p_g(x)}{p_{data}(x)+p_g(x)}\right]\\\
+&=-2\log 2 + \mathbb{E}_ {x\sim p_{data}}\left[\log 2+\log \dfrac{p_{data}(x)}{p_g(x)+p_{data}(x)}\right] + \mathbb{E}_ {x\sim p_g}\left[\log 2+\log \dfrac{p_g(x)}{p_g(x)+p_{data}(x)}\right]\\\
+&=-2\log 2 + \mathbb{E}_ {x\sim p_{data}}\left[\log \dfrac{p_{data}(x)}{(p_g(x)+p_{data}(x))/2}\right] + \mathbb{E}_ {x\sim p_g}\left[\log \dfrac{p_g(x)}{(p_g(x)+p_{data}(x))/2}\right]
+\end{aligned}
+\\]
+Theo Kullback–Leibler divergence, ta có 
+\\[C(G)=-\log (4)+\operatorname{KL}\left(p_{data} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right)+\operatorname{KL}\left(p_{g} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right) = -\log (4)+2 \cdot \operatorname{JSD}\left(p_{data} \\| p_{g}\right)\ge 0.\\]
+Dấu bằng xảy ra khi và chỉ khi \\(p_g = p_{data}\\). Khi đó \\(C^* = \min_G C(G) = -\log 4\\). Suy ra \\(p_g = p_{data}\\) là nghiệm duy nhất để có được cân bằng Nash.
+\\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
+
+Thuật toán trong GAN
+{% include aligner.html images="dl_posts/gan/algorithm.png" %}
+
+
+Ta có định lý sau
+> Hàm sau là lồi trong \\(p_g\\).
+\\[U\left(p_{g}, D\right)=\mathbb{E}_ {x \sim p_{data}}[\log D(x)]+\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))].\\]
+
+**Chứng minh**
+
+Thật vậy, do \\(1-D(x)\ge 0\\) nên hàm \\(\log(1-D(x)\\) lồi trên \\(p_g\\), do tính cộng tính của kỳ vọng nên \\(\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))]\\) lồi trên \\(p_g\\), từ đó \\(U\left(p_{g}, D\right)\\) lồi trên \\(p_g\\).
+\\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
+
+Ta có mệnh đề về sự hội tụ trong GAN
+> Nếu \\(G\\) và \\(D\\) đủ năng lực, và ở mỗi bước của thuật toán, Discriminator được tối ưu với \\(G\\) đã biết, khi đó \\(C(G)\longrightarrow -\log 4\\) thì \\(p_g\longrightarrow p_{data}\\). 
+
+Phần này tôi chưa hiểu, bạn có thể xem tác giả chứng minh trong bài báo. Tuy vậy, tôi cảm thấy chứng minh của tác giả khá mơ hồ và không được chặt chẽ.
 
 ## Các hạn chế (Drawbacks) của GAN
-1. Mode Collapse
+
+Phần này tôi sẽ cập nhật sau.
+
+<!-- 1. Mode Collapse
 
 2. Convergence
 
 3. Quanlity
 
-4. Metrics
+4. Metrics -->
 
-5. 
 
 
 # Tài liệu tham khảo
+[1]. [Convergence Problems with Generative Adversarial Networks](https://arxiv.org/pdf/1806.11382.pdf), S. A. Barnett.
+
+[2]. [Math behind gans](https://towardsdatascience.com/the-math-behind-gans-generative-adversarial-networks-3828f3469d9c), Mayank Vadsola
+Mayank Vadsola.
+
+[3]. [AI for comedy generative networks and latent spaces](https://medium.com/data-science-lab-amsterdam/ai-for-comedy-generative-networks-and-latent-spaces-4e15d2d71dbb), Dirk Meulenbelt
+.
+
+[4]. [Latent space visualization deep learning](https://hackernoon.com/latent-space-visualization-deep-learning-bits-2-bd09a46920df), Julien Despois.
+
+[5]. [Understanding latent space in machine learning](https://towardsdatascience.com/understanding-latent-space-in-machine-learning-de5a7c687d8d#:~:text=Key%20Takeaways,representations%20of%20data%20for%20analysis.), Ekin Tiu.
+
+[6]. [DCGAN-Tensorflow](https://www.tensorflow.org/tutorials/generative/dcgan)
