@@ -447,7 +447,7 @@ C(G)
 \end{aligned}
 \\]
 Theo Kullback–Leibler divergence, ta có 
-\\[C(G)=-\log (4)+\operatorname{KL}\left(p_{data} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right)+\operatorname{KL}\left(p_{g} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right) = -\log (4)+2 \cdot \operatorname{JSD}\left(p_{data} \\| p_{g}\right)\ge 0.\\]
+\\[C(G)=-\log 4+\operatorname{KL}\left(p_{data} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right)+\operatorname{KL}\left(p_{g} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right) = -\log 4+2 \cdot \operatorname{JSD}\left(p_{data} \\| p_{g}\right)\ge -\log 4.\\]
 Dấu bằng xảy ra khi và chỉ khi \\(p_g = p_{data}\\). Khi đó \\(C^* = \min_G C(G) = -\log 4\\). Suy ra \\(p_g = p_{data}\\) là nghiệm duy nhất để có được cân bằng Nash.
 \\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
 
