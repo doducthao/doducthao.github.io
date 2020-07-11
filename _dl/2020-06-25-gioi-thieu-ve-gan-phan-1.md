@@ -473,6 +473,8 @@ Phần này tôi chưa hiểu, bạn có thể xem tác giả chứng minh trong
 
 Phần này tôi sẽ cập nhật sau.
 
+Cảm ơn bạn đã đọc tới đây, tôi vẫn còn đang phải học hỏi nhiều nên rất mong nhận được ý kiến chia sẻ từ mọi người từ comments hoặc mails. Mến chào bạn.
+
 <!-- 1. Mode Collapse
 
 2. Convergence
