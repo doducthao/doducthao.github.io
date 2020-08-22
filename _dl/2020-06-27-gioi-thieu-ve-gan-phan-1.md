@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Khám phá Generative Adversarial Network (GAN)
+title: Khám Phá Generative Adversarial Network (GAN)
 subtitle: "Bài viết vẫn sẽ được cập nhật"
 # color: RGB(85, 180, 176) # blue turquoise
 color: RGB(149, 82, 81) # marsala
@@ -154,7 +154,7 @@ Theo trực giác, trong Maximin, tối đa hóa đến trước khi tối thi�
 
 Trong ví dụ trên, Maximin và Minimax bằng nhau. Trong trường hợp như vậy (không phải lúc nào cũng xảy ra!), chiến lược minimax cho hai người chơi sẽ mang lại `cân bằng Nash` (hay `Nash Equilibrium`) của trò chơi. Để hiểu về cân bằng Nash, tôi khuyến khích bạn hai tài liệu sau: [TL1](https://brilliant.org/wiki/nash-equilibrium/), [TL2](https://vi.wikipedia.org/wiki/C%C3%A2n_b%E1%BA%B1ng_Nash).
 
-Trong [zeros-sum games](https://en.wikipedia.org/wiki/Zero-sum_game), cân bằng Nash luôn xảy ra khi Minimax và Maximin bằng nhau, hay \\[\max _{x} \min _{y} f(x, y)=\max _{y} \min _{x} f(x, y).\\]
+Trong [zeros-sum games](https://en.wikipedia.org/wiki/Zero-sum_game), cân bằng Nash luôn xảy ra khi Minimax và Maximin bằng nhau, hay \\[\min _{x} \max _{y} f(x, y)=\max _{y} \min _{x} f(x, y).\\]
 
 Ứng dụng của Minimax cho zeros-sum games là đặc biệt quan trọng.
 > Trong zeros-sum games với hữu hạn các chiến lược, tồn tại một mức chi trả \\(P\\) và một [chiến lược hỗn hợp](https://www.youtube.com/watch?v=aa8USttcDoE) (mixed strategy) với mỗi người chơi thỏa mãn

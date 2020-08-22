@@ -70,7 +70,7 @@ collections:
     permalink: /:collection/:path/:name
 
 math-list: [Analysis, Algebra, Probability-Statistics]
-dl-list: [Neural Networks, GAN]
+dl-list: [Neural Networks, GAN, Programming]
 
 # BUILD SETTINGS
 # markdown: kramdown
