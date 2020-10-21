@@ -455,19 +455,35 @@ Thuật toán trong GAN
 {% include aligner.html images="dl_posts/gan/algorithm.png" %}
 
 
-Ta có định lý sau
-> Hàm sau là lồi trong \\(p_g\\).
+Ta có **mệnh đề về sự hội tụ trong GAN**
+> Nếu \\(G\\) và \\(D\\) đủ khả năng, và ở mỗi bước của thuật toán trên, Discriminator được tối ưu với \\(G\\) cho trước, và \\(p_g\\) được cập nhật để cải tiến
+ \\[ \mathbb{E}_ {x \sim p_{data}} [\log D^*_ G(x)]+\mathbb{E}_ {x \sim p_g}[\log (1-D_G^ * (x))].\\]
+Khi đó \\(p_g\longrightarrow p_{data}\\). 
+
+Để phục vụ chứng minh mệnh đề trên, ta chứng minh bổ đề sau 
+
+Hàm dưới là lồi trong \\(p_g\\)
 \\[U\left(p_{g}, D\right)=\mathbb{E}_ {x \sim p_{data}}[\log D(x)]+\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))].\\]
 
-**Chứng minh**
+Thật vậy, do \\(1-D(x)\ge 0\\) nên hàm \\(\log(1-D(x))\\) lồi trên \\(p_g\\), do tính cộng tính của kỳ vọng nên \\(\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))]\\) lồi trên \\(p_g\\), tương tự \\(\mathbb{E}_ {x \sim p_{g}}[\log D(x)]\\) lồi trên \\(p_g\\). Từ đó \\(U\left(p_{g}, D\right)\\) lồi trên \\(p_g\\).
 
-Thật vậy, do \\(1-D(x)\ge 0\\) nên hàm \\(\log(1-D(x)\\) lồi trên \\(p_g\\), do tính cộng tính của kỳ vọng nên \\(\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))]\\) lồi trên \\(p_g\\), từ đó \\(U\left(p_{g}, D\right)\\) lồi trên \\(p_g\\).
-\\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
+Bây giờ với tập chỉ số \\(A\\), và \\(f_a\\) là hàm lồi trên \\(p_g\\). Ta đặt \\(f(x)=\text{sup}_{a \in A} f_a (x), \forall x\in p_g\\).
 
-Ta có mệnh đề về sự hội tụ trong GAN
-> Nếu \\(G\\) và \\(D\\) đủ năng lực, và ở mỗi bước của thuật toán, Discriminator được tối ưu với \\(G\\) đã biết, khi đó \\(C(G)\longrightarrow -\log 4\\) thì \\(p_g\longrightarrow p_{data}\\). 
+Lấy \\(x_0\in p_g\\), đặt \\(b=\text{arg sup}_a f_a(x_0)\\), suy ra \\(f(x_0)=f_b(x_0)\\).
 
-Phần này tôi chưa hiểu, bạn có thể xem tác giả chứng minh trong bài báo. Tuy vậy, tôi cảm thấy chứng minh của tác giả khá mơ hồ và không được chặt chẽ.
+Lấy \\(g\in \partial f_b(x_0)\\) (\\(g\\) là dưới gradient bất kỳ của \\(f_b(x_0)\\)). Từ định nghĩa của dưới gradient suy ra với \\(y\\) thuộc lân cận nhỏ tùy ý của \\(x_0\\), ta có \\[f_b(y)\ge f_b(x_0) + g(y-x_0).\\]
+
+Từ \\(f(y)=\text{sup}_a f_a(y)\ge f_b(y)\\) suy ra \\(f(y)\ge f(x_0)+g(y-x_0)\\). Do đó \\(g\in \partial f(x_0)\\) nên \\(\partial f_b(x_0) \subset \partial f(x_0)\\).
+
+Nói cách khác, dưới vi phân của supremum của một hàm lồi tại một điểm luôn chứa các dưới gradient của supremum của hàm tại điểm đó.
+
+Áp dụng điều này cho hàm lồi \\(\text{sup}_D U(p_g, D)\\).
+
+Do hàm lồi này chỉ có một cực tiểu toàn cục \\(p_{data}\\) như chứng minh ở định lý trên, khi cập nhật bằng Gradient Descent, \\(p_g\\) sẽ dần hội tụ về \\(p_{data}\\).
+
+
+
+
 
 ## Các hạn chế (Drawbacks) của GAN
 
