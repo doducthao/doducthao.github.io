@@ -340,17 +340,19 @@ Hình dưới đây là sơ đồ cấu trúc hoạt động của GAN, để b�
 ![structure]({% link assets/dl_posts/gan/structure.png %})
 
 Về mặt ký hiệu
-\\[
+
+\[
     \begin{aligned}
-        D: & \text{ Discriminator} \\\
-        G: & \text{ Generator} \\\
-        \theta_d: & \text{ Tham số của Discriminator} \\\
-        \theta_g: & \text{ Tham số của Generator} \\\
-        p_z(z) :& \text{ Phân phối của nhiễu (noise) đầu vào} \\\
-        p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\\
+        D: & \text{ Discriminator} \\
+        G: & \text{ Generator} \\
+        \theta_d: & \text{ Tham số của Discriminator} \\
+        \theta_g: & \text{ Tham số của Generator} \\
+        p_z(z) :& \text{ Phân phối của nhiễu (noise) đầu vào} \\
+        p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\
         p_g(x): & \text{ Phân phối của Generator}
     \end{aligned}
-\\]
+\]
+
 **Chiến lược**: Tìm \\(G\\) để \\(p_g(x) = p_{data}(x), \forall x\\). Nếu nghiệm \\(G\\) tìm được thỏa mãn phương trình trên, ta có thể mong đợi rằng \\(G\\) là một mạng neural giúp chúng ra sinh ra những dữ liệu chân thật. Cùng nhìn một [thành quả](https://miro.medium.com/max/800/0*xuZJA7BHYhVtg4Vf.gif) của GAN.
 
 Generator (\\(G)\\) hay Discriminator \\((D)\\), bản chất cũng là các mạng neural với nhiều layer.
