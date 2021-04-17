@@ -342,12 +342,12 @@ Hình dưới đây là sơ đồ cấu trúc hoạt động của GAN, để b�
 Về mặt ký hiệu
 
 \begin{aligned}
-    D: & \text{ Discriminator} \\\
-    G: & \text{ Generator} \\\
-    \theta_d: & \text{ Tham số của Discriminator} \\\
-    \theta_g: & \text{ Tham số của Generator} \\\
-    p_z(z) :& \text{ Phân phối của nhiễu (noise) đầu vào} \\\
-    p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\\
+    D: & \text{ Discriminator} \\
+    G: & \text{ Generator} \\
+    \theta_d: & \text{ Tham số của Discriminator} \\
+    \theta_g: & \text{ Tham số của Generator} \\
+    p_z(z) :& \text{ Phân phối của nhiễu (noise) đầu vào} \\
+    p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\
     p_g(x): & \text{ Phân phối của Generator}
 \end{aligned}
 
