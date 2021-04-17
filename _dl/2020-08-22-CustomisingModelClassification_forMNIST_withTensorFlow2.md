@@ -19,7 +19,7 @@ Bài này chủ yếu tôi tập trung vào code, không viết nhiều và khô
 * TOC
 {:toc}
 
-## Thư viện cần thiết
+### Thư viện cần thiết
 
 ```python
 import numpy as np
@@ -28,21 +28,14 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 tf.__version__
 ```
-
-
-
-
     '2.1.0'
 
-
-
-## Mục tiêu 
+### Mục tiêu 
 - Hiểu cách vận hành của một mạng fully connected nhiều lớp.
-- Code bằng Tensorflow 2 (bài này dùng bản 2.1.0) với custom layer (tự build init weights, bias, loss function,...).
-- Thực hành trên MNIST dataset của thư viện TensorFlow.
+- Code bằng numpy với custom layer (tự build init weights, bias, loss function,...).
+- Thực hành trên MNIST dataset.
 
-
-## Phần 1 - Sơ bộ về Foward trong mạng Neural
+# Phần 1 - Sơ bộ về Foward trong mạng Neural
 *Không trình bày chi tiết về neural net*
 
 Về cơ bản, chẳng hạn ta có một sample \\(x=(x_1, x_2)\\), `hidden layer` gồm có \\(4\\) node \\(H\\) như hình trên, và thêm vào đó là \\(1\\) `bias`. `Ouput layer` là một layer có \\(2\\) node (ứng với 2 giá trị ta muốn phân loại). Mỗi \\(x_i\\) có một kết nối \\(w_j\\) nào đó với một node \\(H\\).
@@ -51,7 +44,7 @@ Về cơ bản, chẳng hạn ta có một sample \\(x=(x_1, x_2)\\), `hidden la
 **Bước 1**: Tính toán các tổ hợp tuyến tính giữa \\(x\\) và \\(W_1\\), ở đây là phép nhân vô hướng giữa hai véc tơ (tích trong của \\(x\\) và \\(W_1\\)) cộng với `bias`, kết quả ký hiệu là \\(z\\).
 
 
-```python
+```python   
 # tạo véc tơ x là một tensor shape (1,2), giá trị lấy trong khoảng (-10, 10)
 # tạo bias = 1
 # seed ddể cố định việc tạo ra x, W_1 và W_2, phục vụ cho việc test ở sau.
@@ -226,7 +219,7 @@ np.sum(aa)
 
 
 
-### Thực hiện trên TensorFlow 
+## Tạo quá trình forward 
 
 
 ```python
@@ -373,7 +366,7 @@ print(result==aa)
     [[ True  True]]
 
 
-## Phần 2: Sơ bộ về Backward trong mạng Neural
+# Phần 2: Sơ bộ về Backward trong mạng Neural
 
 Có hai hàm loss được nhắc đến trong phần này
 
@@ -382,7 +375,7 @@ Có hai hàm loss được nhắc đến trong phần này
 
 BCE lợi thế hơn hẳn MSE vì nó là độ đo sai lệch giữa 2 phân bố, trong khi MSE chỉ đo về khoảng cách là chủ yếu.
 
-### Chain rule
+## Chain rule
 Đơn giản là đạo hàm của hàm hợp, thực hiện tính toán cập nhật trọng số trong giải thuật gradient descent.
 
 ![](https://andymath.com/wp-content/uploads/2019/08/chain-rule.jpg)
@@ -420,8 +413,8 @@ Thêm vào đó
 \\[\frac{d L}{d x_{k}}=\frac{d L}{d a_{k}} \frac{d a_{k}}{d x_{k}}=\frac{d L}{d a_{k}} \frac{d a_{k}}{d z_{k}} \frac{d z_{k}}{d x_{k}}=l_{k+1}^{\prime} \odot f_{k}^{\prime} \frac{d\left(W_{k} \cdot x_{k}+b_{k}\right)}{d x_{k}}=W_{k}^{\top} \cdot\left(l_{k+1}^{\prime} \odot f_{k}^{\prime}\right)\\]
 
 
-### Thực hành trên TensorFlow
-
+## Tạo mạng neural hoàn chỉnh forward - backward 
+### Lưu ý các phép toán 
 - *: phép nhân trên python, nhân kiểu hadamard, có tính đối xứng
 - np.multiply: phép nhân trên numpy, nhân kiểu hadamard, có tính đối xứng
 - np.matmul: Phép nhân ma trận
@@ -434,11 +427,11 @@ y = np.array([[5,6],[7,8]], dtype=np.float64)
 z = np.array([[1,2],[3,4], [5,6]]).T
 t = np.array([[1,2]])
 
-# print(x * y)
-# print(np.multiply(x, y))
+print(x * y)
+print(np.multiply(x, y))
 
-# print(x * t)
-# print(np.multiply(x, t))
+print(x * t)
+print(np.multiply(x, t))
 
 print(np.matmul(x,y))
 print(np.matmul(y,x))
@@ -449,20 +442,7 @@ print(np.matmul(x,z))
 print(np.dot(x,z))
 ```
 
-    [[19. 22.]
-     [43. 50.]]
-    [[23. 34.]
-     [31. 46.]]
-    [[19. 22.]
-     [43. 50.]]
-    [[23. 34.]
-     [31. 46.]]
-    [[ 5. 11. 17.]
-     [11. 25. 39.]]
-    [[ 5. 11. 17.]
-     [11. 25. 39.]]
-
-#### Các hàm cần thiết
+## Các hàm cần thiết
 
 ```python
 def sigmoid(x):     # sigmoid function
@@ -491,7 +471,7 @@ def binary_cross_entropy(label, pred):            # cross-entropy loss function
 def derivated_binary_cross_entropy(label, pred):  # cross-entropy derivative function
     return (pred - label) / (pred * (1 - pred))
 ```
-
+### Fully-connected 
 Bây giờ ta tiến hành code một layer fully connected đầy đủ forward và backward để có thể optimize W và b, bằng SGD qua từng batch (khi thực hành trên MNIST dataset) trên layer đó. Ở đây ta dùng sigmoid là activation cho mọi layer). Phần optimize đơn giản là áp dụng giải thuật Gradient Descent.
 
 ```python
@@ -533,9 +513,8 @@ class FC_layer_complete(object):
 Ta tạo một `class Network_complete`, thêm phương thức `evaluate_accuracy` để đánh giá accuracy trên tập test sau mỗi epoch.
 
 Phương thức `train` được tiến hành như sau:
-    - Lặp qua từng epoch, ở mỗi epoch lại lặp qua từng batch, mỗi batch có 32 samples.
-    - Ta shuffle và tạo batch cho data train (32 samples), sau đó tiến hành train và cập nhật trọng số trên
-    từng layer ứng với batch đó, đây gọi là mini batch GD.
+- Lặp qua từng epoch, ở mỗi epoch lại lặp qua từng batch, mỗi batch có 32 samples.
+- Ta shuffle và tạo batch cho data train (32 samples), sau đó tiến hành train và cập nhật trọng số trên từng layer ứng với batch đó, đây gọi là mini batch GD.
 
 
 ```python
@@ -606,9 +585,9 @@ class Network_complete(object):
         return losses, val_accuracies
                 
 ```
-## Phần 3: Train dữ liệu MNIST dataset và minh họa
+# Phần 3: Train dữ liệu MNIST dataset và minh họa
 
-### Tiền xử lí dữ liệu
+## Tiền xử lí dữ liệu
 
 ```python
 from tensorflow.keras.datasets.mnist import load_data
@@ -663,10 +642,11 @@ losses, accuracies = mnist_net.train(x_train, y_train, x_test, y_test)
     epoch: 10 -- training loss=0.038245 -- val accuracy=0.93
 
 
-Có thể thấy, từ epoch 7 trở đi, val_accuracy không tăng, mô hình lúc này đã bị underfitting, hiểu qua biểu đồ sau
+Có thể thấy, từ epoch 7 trở đi, val_accuracy không tăng, mô hình lúc này đã `underfited`, ví dụ về underfited 
+
 ![](https://www.researchgate.net/publication/335604816/figure/fig2/AS:799391489220609@1567601191401/Bias-variance-trade-off-in-machine-learning-This-figure-illustrates-the-trade-off.png)
 
-### Vẽ biểu đồ minh họa quá trình train thông qua losses và accuracies
+## Biểu đồ 
 
 ```python
 def plot(data):
@@ -701,8 +681,7 @@ plot('accuracies')
 
 
 
-## TÀI LIỆU THAM KHẢO
-
+# TÀI LIỆU THAM KHẢO
 [1] https://machinelearningcoban.com/2017/02/24/mlp/
 
 [2] https://aayushmnit.github.io/posts/2018/06/Building_neural_network_from_scratch/

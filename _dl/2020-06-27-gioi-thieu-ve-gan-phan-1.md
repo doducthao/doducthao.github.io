@@ -11,6 +11,7 @@ date: July 11, 2020
 # author: doducthao
 comments: true
 mathjax: true
+
 ---
 *If you can make a classifier learn the difference between cats and dogs, you can make a classifier that distinguishes between pictures that are real and pictures that are generated.*
 
@@ -222,22 +223,24 @@ Ta có định lý sau
 
 \\((1)\Rightarrow (2)\\): Xét cặp cân bằng \\(\left(x^{\star}, y^{\star}\right)\\), ta có
 
-\\[
-\begin{aligned}
-v_{B} &:=\min_{y \in Y_{n}} \max_{x \in X_{m}} V(x, y) \leq \max_{x \in X_{m}} V\left(x, y^{\star}\right)=V\left(x^{\star}, y^{\star}\right) \\\
-&=\min_{y \in Y_{n}} V\left(x^{\star}, y\right) \leq \max_{x \in X_{m}} \min_{y \in Y_{n}} V(x, y)=:v_{A}
-\end{aligned}
-\\]
+$$\begin{eqnarray}
+v_{B} &=&\min_{y \in Y_{n}} \max_{x \in X_{m}} V(x, y) \leq \max_{x \in X_{m}} V\left(x, y^{\star}\right)=V\left(x^{\star}, y^{\star}\right) \\
+&=&\min_{y \in Y_{n}} V\left(x^{\star}, y\right) \leq \max_{x \in X_{m}} \min_{y \in Y_{n}} V(x, y)=v_{A}
+\end{eqnarray}$$
+
 \\(v_A \le v_B\\) là hiển nhiên, vậy nên đẳng thức xảy ra.
 
-\\((2)\Rightarrow (3)\\): Giả sử rằng \\(\mathbf{v} = v_A = v_B\\). Ký hiệu \\(x^{(o)}\\) là vec tơ Maximin và \\(y^{(o)}\\) là véc tơ Minimax. Khi đó với mọi \\(j=1,2, \ldots, n\\) và \\(i=1,2, \ldots, m\\) ta luôn có
-\\[
-\begin{aligned}
-    \sum_{i=1}^{m} a_{i, j} x_{i}^{(o)} &=V\left(x^{(o)}, \beta_{j}\right) \geq \min_{y \in Y_{n}} V\left(x^{(o)}, y\right)=\max_{x \in X_{m}} \min_{y \in Y_{n}} V(x, y) \\\
-    &=\mathbf{v}=\min_{y \in Y_{n}} \max_{x \in X_{m}} V(x, y)=\max_{x \in X_{m}} V\left(x, y^{(o)}\right) \\\
-    & \geq V\left(\alpha_{i}, y^{(o)}\right)=\sum_{j=1}^{n} a_{i, j} y_{j}^{(o)}.
-\end{aligned}
-\\]
+\\((2)\Rightarrow (3)\\): Giả sử rằng \\(\mathbf{v} = v_A = v_B\\). Ký hiệu \\(x^{(o)}\\) là vec tơ Maximin và \\(y^{(o)}\\) là véc tơ Minimax.
+
+Khi đó với mọi \\(j=1,2, \ldots, n\\) và \\(i=1,2, \ldots, m\\) ta luôn có
+$$\begin{eqnarray}
+\sum_{i=1}^{m} a_{i, j} x_{i}^{(o)}
+&=& V\left(x^{(o)}, \beta_{j}\right) \geq \min_{y \in Y_{n}} V\left(x^{(o)}, y\right)=\max_{x \in X_{m}} \min_{y \in Y_{n}} V(x, y) \\
+&=&\mathbf{v}=\min_{y \in Y_{n}} \max_{x \in X_{m}} V(x, y)=\max_{x \in X_{m}} V\left(x, y^{(o)}\right) \\
+& \geq & V\left(\alpha_{i}, y^{(o)}\right)=\sum_{j=1}^{n} a_{i, j} y_{j}^{(o)}.
+\end{eqnarray}
+$$
+
 \\((3)\Rightarrow (1)\\): Từ \\(a)\\) và \\(b)\\) ta suy ra 
 \\[
     V\left(x^{(o)}, y\right) \geq \mathbf{v} \geq V\left(x, y^{(o)}\right) \text { với mọi } x \in X_{m} \text { và } y \in Y_{n}.
@@ -253,19 +256,18 @@ Chứng minh **định lý của Von Neumman** như sau
 **Chứng minh**
 
 Ta biết rằng tập \\(X_{m} \times Y_{n}\\) các cặp chiến lược hỗn hợp là đóng, bị chặn và lồi trong \\(\mathbb{R}^{m+n}\\). Ta định nghĩa một hàm chuyển (transformation) \\(T: X_{m} \times Y_{n} \longrightarrow X_{m} \times Y_{n}\\). Đặt
-\\[
-    c_{i}(x, y):=\left\lbrace\begin{array}{ll}
-    V\left(\alpha_{i}, y\right)-V(x, y) & \text { nếu đại lượng này dương, } \\\
-    0 & \text { otherwise }
-    \end{array}\right.
-\\]
 
-\\[
-    d_{j}(x, y):=\left\lbrace\begin{array}{ll}
-    V(x, y)-V\left(x, \beta_{j}\right) & \text { nếu đại lượng này dương, } \\\
-    0 & \text { otherwise }
-    \end{array}\right.
-\\]
+$$\begin{eqnarray}
+c_{i}(x, y) &:=& V\left(\alpha_{i}, y\right)-V(x, y) \text { (nếu đại lượng này dương) } \\
+&:=& 0, \text {ngược lại}
+\end{eqnarray}$$
+
+
+$$\begin{eqnarray}
+d_{j}(x, y)&:=& V(x, y)-V\left(x, \beta_{j}\right) & \text { nếu đại lượng này dương} \\
+& := & 0, \text { otherwise }
+\end{eqnarray}$$
+
 Với mỗi \\((x, y) \in X_{m} \times Y_{n}\\), ta định nghĩa \\(T(x, y)=\left(x^{\prime}, y^{\prime}\right)\\) bởi
 \\[x_{i}^{\prime}:=\frac{x_{i}+c_{i}(x, y)}{1+\sum_{k=1}^{m} c_{k}(x, y)} \text { và } y_{j}^{\prime}:=\frac{y_{j}+d_{j}(x, y)}{1+\sum_{k=1}^{n} d_{k}(x, y)}\\]
 Chú ý rằng \\(x_{i}^{\prime} \geq 0\\) vì \\(x_i \ge 0, c_i \ge 0\\) và \\(1+\sum_{k} c_{k} \geq 0\\). Hơn nữa ta có 
@@ -341,7 +343,7 @@ Hình dưới đây là sơ đồ cấu trúc hoạt động của GAN, để b�
 
 Về mặt ký hiệu
 
-\begin{aligned}
+$$\begin{aligned}
     D: & \text{ Discriminator} \\
     G: & \text{ Generator} \\
     \theta_d: & \text{ Tham số của Discriminator} \\
@@ -350,6 +352,7 @@ Về mặt ký hiệu
     p_{data}(x): & \text{ Phân phối của dữ liệu gốc} \\
     p_g(x): & \text{ Phân phối của Generator}
 \end{aligned}
+$$
 
 **Chiến lược**: Tìm \\(G\\) để \\(p_g(x) = p_{data}(x), \forall x\\). Nếu nghiệm \\(G\\) tìm được thỏa mãn phương trình trên, ta có thể mong đợi rằng \\(G\\) là một mạng neural giúp chúng ra sinh ra những dữ liệu chân thật. Cùng nhìn một [thành quả](https://miro.medium.com/max/800/0*xuZJA7BHYhVtg4Vf.gif) của GAN.
 
@@ -393,12 +396,11 @@ Bây giờ, giả sử đã có \\(D = D^* _{G}\\), do mục tiêu của \\(G\\)
 Ta đi chứng minh bài toán tối ưu có nghiệm duy nhất \\(G^*\\) thỏa điều kiện \\(p_g = p_{data}\\).
 
 Theo định lý Radon-Nikodym, ta có
-\\[
-\begin{aligned}
+$$\begin{aligned}
     V(G, D) &=\int_x p_{\text {data }}(x) \log (D(x)) d x+\int_z p_z(z) \log (1-D(G(z))) d z \\\
     &=\int_x p_{\text {data }}(x) \log (D(x))+p_g(x) \log (1-D(x)) d x
 \end{aligned}
-\\] 
+$$ 
 
 Với mọi \\((a,b)\in \mathbb{R}\setminus \left\lbrace (0,0)\right\rbrace\\). Xét hàm số \\(f(u) = a\log u + b\log (1-u)\\), tìm maximum của \\(f\\) đơn giản bằng đạo hàm
 \\[f^{\prime}(u)=0\Leftrightarrow \dfrac{a}{u}-\dfrac{b}{1-u}=0\Leftrightarrow u = \dfrac{a}{a+b}.\\]
@@ -409,14 +411,14 @@ Từ đó suy ra \\(D^*_ G = \dfrac{p_{\text {data}}}{p_{\text {data}}+p_{g}}\\)
 
 Trong bài báo, \\(C(G)\\) được nhắc đến là `mục tiêu huấn luyện ảo` (`virtual training criterion`), và được ký hiệu
 
-\\[
-\begin{aligned}
+$$\begin{aligned}
 C(G) &=\max_D V(G, D) \\\
 &=\mathbb{E}_ {x \sim p_{data}} \left[\log D_G^* (x)\right]+\mathbb{E}_ {z \sim p_z}\left[\log \left(1-D_G^* (G(z))\right)\right] \\\
 &=\mathbb{E}_ {x \sim p_{data}}\left[\log D_G^* (x)\right]+\mathbb{E}_ {x \sim p_g}\left[\log \left(1-D_G^*(x)\right)\right] \\\
 &=\mathbb{E}_ {x \sim p_{data}} \left[\log \dfrac{p_{data}(x)}{p_{data}(x)+p_g(x)}\right]+\mathbb{E}_ {x \sim p_g}\left[\log \dfrac{p_g(x)}{p_{data}(x)+p_g(x)}\right]
 \end{aligned}
-\\]
+$$
+
 > - Với các phân phối xác suất \\(p, q\\) được định nghĩa trên cùng một không gian xác suất \\(\mathbb{X}\\), Độ đo Kullback–Leibler divergence từ \\(q\\) vào \\(p\\) được định nghĩa
 \\[\operatorname{KL}(p \\| q)=\sum_{x \in \mathbb{X}} p(x) \log \left(\dfrac{p(x)}{q(x)}\right).\\]
 - Với \\(m=\dfrac{p+q}{2}\\) là một phân phối xác suất, ta định nghĩa độ đo Jensen–Shannon divergence
@@ -426,7 +428,7 @@ C(G) &=\max_D V(G, D) \\\
 - Khi độ đo bằng \\(0\\), hiển nhiên \\(p=q\\).
 - xem thêm về hai độ đo này ở [1](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) và [2](https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence).
 
-Định lý quan trọng nhất của bài báo
+### Định lý quan trọng nhất của bài báo
 > Global minimum của \\(C(G)\\) đạt được khi và chỉ khi \\(p_g = p_{data}\\). Khi đó giá trị của \\(C(G)\\) là \\(-\log 4\\).
 
 **Chứng minh**
@@ -438,24 +440,23 @@ Nói vui: Lúc này Discriminator có đôi chút bối rối, giống như tâm
 Lúc này \\(C(G) = \log \dfrac{1}{2} + \log \dfrac{1}{2}=-\log 4\\).
 
 Mặt khác, ta biến đổi \\(C(G)\\) như sau
-\\[
-\begin{aligned}
+$$\begin{aligned}
 C(G) 
 &=\mathbb{E}_ {x \sim p_{data}} \left[(\log 2-\log 2)+\log \dfrac{p_{data}(x)}{p_{data}(x)+p_g(x)}\right]+\mathbb{E}_ {x \sim p_g}\left[(\log 2-\log 2)+\log \dfrac{p_g(x)}{p_{data}(x)+p_g(x)}\right]\\\
 &=-2\log 2 + \mathbb{E}_ {x\sim p_{data}}\left[\log 2+\log \dfrac{p_{data}(x)}{p_g(x)+p_{data}(x)}\right] + \mathbb{E}_ {x\sim p_g}\left[\log 2+\log \dfrac{p_g(x)}{p_g(x)+p_{data}(x)}\right]\\\
 &=-2\log 2 + \mathbb{E}_ {x\sim p_{data}}\left[\log \dfrac{p_{data}(x)}{(p_g(x)+p_{data}(x))/2}\right] + \mathbb{E}_ {x\sim p_g}\left[\log \dfrac{p_g(x)}{(p_g(x)+p_{data}(x))/2}\right]
 \end{aligned}
-\\]
+$$
+
 Theo Kullback–Leibler divergence, ta có 
 \\[C(G)=-\log 4+\operatorname{KL}\left(p_{data} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right)+\operatorname{KL}\left(p_{g} \bigg\\| \dfrac{p_{data}+p_{g}}{2}\right) = -\log 4+2 \cdot \operatorname{JSD}\left(p_{data} \\| p_{g}\right)\ge -\log 4.\\]
 Dấu bằng xảy ra khi và chỉ khi \\(p_g = p_{data}\\). Khi đó \\(C^* = \min_G C(G) = -\log 4\\). Suy ra \\(p_g = p_{data}\\) là nghiệm duy nhất để có được cân bằng Nash.
 \\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
 
-Thuật toán trong GAN
+### Thuật toán GAN
 {% include aligner.html images="dl_posts/gan/algorithm.png" %}
 
-
-Ta có **mệnh đề về sự hội tụ trong GAN**
+### Mệnh đề về sự hội tụ trong GAN
 > Nếu \\(G\\) và \\(D\\) đủ khả năng, và ở mỗi bước của thuật toán trên, Discriminator được tối ưu với \\(G\\) cho trước, và \\(p_g\\) được cập nhật để cải tiến
  \\[ \mathbb{E}_ {x \sim p_{data}} [\log D^*_ G(x)]+\mathbb{E}_ {x \sim p_g}[\log (1-D_G^ * (x))].\\]
 Khi đó \\(p_g\longrightarrow p_{data}\\). 
@@ -480,10 +481,6 @@ Nói cách khác, dưới vi phân của supremum của một hàm lồi tại m
 Áp dụng điều này cho hàm lồi \\(\text{sup}_D U(p_g, D)\\).
 
 Do hàm lồi này chỉ có một cực tiểu toàn cục \\(p_{data}\\) như chứng minh ở định lý trên, khi cập nhật bằng Gradient Descent, \\(p_g\\) sẽ dần hội tụ về \\(p_{data}\\).
-
-
-
-
 
 ## Các hạn chế (Drawbacks) của GAN
 
