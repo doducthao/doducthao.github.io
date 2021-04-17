@@ -1,14 +1,14 @@
 # SITE CONFIGURATION
 baseurl: #"/Type-on-Strap"
 url: "https://doducthao.github.io"
-title: Tự Học AI # site's title
+title: ai notes # site's title
 description: "A blog about Math and Deep Learning" # used by search engines
 markdown: kramdown
 kramdown:
    math_engine: mathjax
 
 # THEME-SPECIFIC CONFIGURATION
-title: Tự Học AI  # blog's title
+title: My notes  # blog's title
 avatar: assets/img/dl6.jpg
 favicon: assets/icons/ai1.png
 gravatar: # Email MD5 hash
