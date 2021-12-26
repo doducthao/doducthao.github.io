@@ -428,7 +428,7 @@ $$
 - Khi độ đo bằng \\(0\\), hiển nhiên \\(p=q\\).
 - xem thêm về hai độ đo này ở [1](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) và [2](https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence).
 
-### Định lý quan trọng nhất của bài báo
+### Định lý quan trọng nhất của bài báo (Định lý 1)
 > Global minimum của \\(C(G)\\) đạt được khi và chỉ khi \\(p_g = p_{data}\\). Khi đó giá trị của \\(C(G)\\) là \\(-\log 4\\).
 
 **Chứng minh**
@@ -457,30 +457,32 @@ Dấu bằng xảy ra khi và chỉ khi \\(p_g = p_{data}\\). Khi đó \\(C^* = 
 {% include aligner.html images="dl_posts/gan/algorithm.png" %}
 
 ### Mệnh đề về sự hội tụ trong GAN
-> Nếu \\(G\\) và \\(D\\) đủ khả năng, và ở mỗi bước của thuật toán trên, Discriminator được tối ưu với \\(G\\) cho trước, và \\(p_g\\) được cập nhật để cải tiến
- \\[ \mathbb{E}_ {x \sim p_{data}} [\log D^*_ G(x)]+\mathbb{E}_ {x \sim p_g}[\log (1-D_G^ * (x))].\\]
-Khi đó \\(p_g\longrightarrow p_{data}\\). 
+> Nếu \\(G\\) và \\(D\\) đủ năng lực cập nhật, và ở mỗi bước của thuật toán (I), Discriminator được tối ưu với \\(G\\) cho trước, và \\(p_g\\) được cập nhật để cải thiện C(G) thì \\(p_g\longrightarrow p_{data}\\). 
 
 Để phục vụ chứng minh mệnh đề trên, ta chứng minh bổ đề sau 
 
 Hàm dưới là lồi trong \\(p_g\\)
 \\[U\left(p_{g}, D\right)=\mathbb{E}_ {x \sim p_{data}}[\log D(x)]+\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))].\\]
 
-Thật vậy, do \\(1-D(x)\ge 0\\) nên hàm \\(\log(1-D(x))\\) lồi trên \\(p_g\\), do tính cộng tính của kỳ vọng nên \\(\mathbb{E}_ {x \sim p_{g}}[\log (1-D(x))]\\) lồi trên \\(p_g\\), tương tự \\(\mathbb{E}_ {x \sim p_{g}}[\log D(x)]\\) lồi trên \\(p_g\\). Từ đó \\(U\left(p_{g}, D\right)\\) lồi trên \\(p_g\\).
+Thật vậy, lấy \\(x, y \in p_g\\) và lấy \\(\alpha\\) bất kỳ trong \\((0,1)\\) thì 
 
-Bây giờ với tập chỉ số \\(A\\), và \\(f_a\\) là hàm lồi trên \\(p_g\\). Ta đặt \\(f(x)=\text{sup}_{a \in A} f_a (x), \forall x\in p_g\\).
+$$\mathbb{E}_{x,y\sim p_g} [\alpha\log(1-D(x))+(1-\alpha)\log(1-D(y))]=\alpha \mathbb{E}_{x\sim p_g}[\log(1-D(x))]+(1-\alpha)\mathbb{E}_{y\sim p_g}[\log(1-D(y))]$$.
+
+Từ đó \\(U\left(p_{g}, D\right)\\) lồi trên \\(p_g\\).
+
+Bây giờ với tập chỉ số \\(A\\) và \\(f_{a\in A}\\) là hàm lồi trên \\(p_g\\). Ta đặt \\(f(x)=\text{sup}_{a \in A} f_a (x), \forall x\in p_g\\).
 
 Lấy \\(x_0\in p_g\\), đặt \\(b=\text{arg sup}_a f_a(x_0)\\), suy ra \\(f(x_0)=f_b(x_0)\\).
 
-Lấy \\(g\in \partial f_b(x_0)\\) (\\(g\\) là dưới gradient bất kỳ của \\(f_b(x_0)\\)). Từ định nghĩa của dưới gradient suy ra với \\(y\\) thuộc lân cận nhỏ tùy ý của \\(x_0\\), ta có \\[f_b(y)\ge f_b(x_0) + g(y-x_0).\\]
+Lấy \\(v \in \partial f_b(x_0)\\) (\\(v\\) là dưới gradient bất kỳ của \\(f_b(x_0)\\)). Từ định nghĩa của dưới gradient suy ra với \\(y\\) thuộc lân cận nhỏ tùy ý của \\(x_0\\), ta có \\[f_b(y)\ge f_b(x_0) + \\langle v, y-x_0 \rangle.\\]
 
-Từ \\(f(y)=\text{sup}_a f_a(y)\ge f_b(y)\\) suy ra \\(f(y)\ge f(x_0)+g(y-x_0)\\). Do đó \\(g\in \partial f(x_0)\\) nên \\(\partial f_b(x_0) \subset \partial f(x_0)\\).
+Từ \\(f(y)=\text{sup}_a f_a(y)\ge f_b(y)\\) suy ra \\(f(y)\ge f(x_0)+ \langle v, y-x_0 \rangle\\). Do đó \\(v\in \partial f(x_0)\\) nên \\(\partial f_b(x_0) \subset \partial f(x_0)\\).
 
-Nói cách khác, dưới vi phân của supremum của một hàm lồi tại một điểm luôn chứa các dưới gradient của supremum của hàm tại điểm đó.
+Nếu \\(f\\) thêm điều kiện khả vi thì dưới gradient của \\(f\\) tại \\(x\\) cũng là gradient của \\(f\\) tại \\(x\\). Nói cách khác, dưới vi phân của supremum của một họ các hàm lồi tại một điểm luôn chứa gradient tại điểm mà hàm đó đạt cực đại. 
 
-Áp dụng điều này cho hàm lồi \\(\text{sup}_D U(p_g, D)\\).
+Áp dụng điều này cho hàm lồi khả vi \\(\text{sup}_D U(p_g, D)\\).
 
-Do hàm lồi này chỉ có một cực tiểu toàn cục \\(p_{data}\\) như chứng minh ở định lý trên, khi cập nhật bằng Gradient Descent, \\(p_g\\) sẽ dần hội tụ về \\(p_{data}\\).
+Ta luôn có gradient để cập nhật cho \\(G\\) khi mà \\(D\\) được tối ưu. Do hàm lồi này chỉ có một cực trị toàn cục \\(p_{data} = p_g\\) như chứng minh ở định lý 1 nên khi cập nhật bằng Gradient Descent (thuật toán I), \\(p_g\\) sẽ dần hội tụ về \\(p_{data}\\).
 
 ## Các hạn chế (Drawbacks) của GAN
 
