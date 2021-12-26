@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lập Trình Chi Tiết Một Mạng MLP Bằng TensorFlow 2 
+title: Lập Trình Một Mạng MLP Bằng Numpy 
 subtitle: 
 color: RGB(132, 35, 23) 
 feature-img: assets/img/pexels/computer.jpeg
