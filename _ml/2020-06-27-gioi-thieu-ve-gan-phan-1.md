@@ -5,7 +5,7 @@ subtitle: "Bài viết vẫn sẽ được cập nhật"
 # color: RGB(85, 180, 176) # blue turquoise
 color: RGB(149, 82, 81) # marsala
 excerpt_separator: <!--more -->
-categories: [GAN]
+categories: [GANs]
 tags: [network, gan, introduce, generative, discriminative, adversarial]
 date: July 11, 2020 
 # author: doducthao
@@ -42,7 +42,7 @@ Thuật ngữ chuyên ngành
 ## GAN là gì ?
 [Ian J. Goodfellow](https://en.wikipedia.org/wiki/Ian_Goodfellow), một học trò xuất sắc của nhà sáng lập Coursera, [Andrew Ng](https://en.wikipedia.org/wiki/Andrew_Ng). Tài năng của anh thực sự bộc lộ qua giai đoạn làm tiến sĩ cùng với [Yoshua Bengio](https://en.wikipedia.org/wiki/Yoshua_Bengio), chủ nhân của giải thưởng ACM AM Turing 2018. Anh được biết đến rộng rãi trong cộng đồng AI nhờ *ý tưởng thú vị nhất về Machine Learning trong vòng mười năm qua*, `Generative Adversarial Network`, hay `GAN`.
 
-{% include aligner.html images="dl_posts/gan/ian_goodfellow.jpg" %}
+{% include aligner.html images="ml_posts/gan/ian_goodfellow.jpg" %}
 
 Muốn nghe giảng về GAN từ chính cha đẻ của nó, xin mời bạn xem ở [NIPS 2016 Workshop](https://www.youtube.com/watch?v=9JpdAg6uMXs).
 
@@ -50,7 +50,7 @@ GAN dịch ra tiếng Việt là `Mạng Chống Đối Tạo Sinh`, là một t
 
 Đây cơ bản là một mạng (network) được xây dựng bằng cách kết hợp nhiều mô hình trong Deep Learning, mà chút nữa ta sẽ đi sâu vào bàn luận. Sơ qua thì các mô hình này giống như Kakalot và Vegeta đánh nhau suốt cả đời vậy, khi trình độ của người này tăng lên thì người kia sẽ lại *try hard* để đấu tiếp, kết quả là sức mạnh của hai người không ngừng tăng lên, có thể nói họ là một **cặp kỳ phùng địch thủ**. 
 
-{% include aligner.html images="dl_posts/gan/kakalot.jpg" %}
+{% include aligner.html images="ml_posts/gan/kakalot.jpg" %}
 
 Chỉ khi sức mạnh của cả hai ngang cơ, họ mới thực sự *thỏa mãn*. Có thể nói theo một cách khác, xác suất thắng trong một trận đấu của họ khi đó là gần như nhau, xấp xỉ bằng \\(\dfrac{1}{2}\\). 
 
@@ -70,15 +70,15 @@ Phần này tôi chủ yếu dịch lại từ [must read papers on gans](https:
     > Ian Goodfellow cũng là một trong những tác giả của bài báo này. Ở bài này cung cấp một chuỗi các gợi ý cho việc xây dựng kiến trúc mô hình dựa trên hướng dẫn đặt ra ở bài DCGAN. Bài báo này giúp hiểu được các giả thuyết về sự bất ổn trong GAN. Thêm vào đó, bài này còn cung cấp nhiều kỹ thuật bổ sung được thiết kế để giúp quá trình training của DCGANs được ổn định, bao gồm `feature matching`, `minibatch discrimination`, `historical averaging`, `one-sided label smoothing`, và `virtual batch normalization`  
 
 1. [Pix2Pix — Isola et al (2016)](https://arxiv.org/abs/1611.07004)
-    > Đây là một mô hình chuyển đổi image-to-image trong GAN. Framework này sử dụng các cặp training samples và nghiên cứu tinh chỉnh nhiều cấu hình trong GAN. Một trong những điều thú vị nhất trong bài báo này là việc thảo luận về PatchGAN: PatchGAN nhìn vào vùng \\(70\times 70\\) của bức ảnh để xác định ảnh đó là thật hay giả, so với cách thông thường là nhìn vào toàn bộ bức ảnh. Mô hình này còn cho thấy một kiến trúc thú vị: U-Net, cũng như là sử dụng các kết nối tắt (skip connections) kiểu Resnet trong Generator model. Có rất nhiều các ứng dụng hay, ví dụ như `edge-maps to photo-realistic images`: input là một bức ảnh chỉ có cạnh viền, output là ảnh thực hoàn chỉnh. Ví dụ với <a href="{% link assets/dl_posts/gan/pix2pix.png %}"> ảnh</a> sau.
+    > Đây là một mô hình chuyển đổi image-to-image trong GAN. Framework này sử dụng các cặp training samples và nghiên cứu tinh chỉnh nhiều cấu hình trong GAN. Một trong những điều thú vị nhất trong bài báo này là việc thảo luận về PatchGAN: PatchGAN nhìn vào vùng \\(70\times 70\\) của bức ảnh để xác định ảnh đó là thật hay giả, so với cách thông thường là nhìn vào toàn bộ bức ảnh. Mô hình này còn cho thấy một kiến trúc thú vị: U-Net, cũng như là sử dụng các kết nối tắt (skip connections) kiểu Resnet trong Generator model. Có rất nhiều các ứng dụng hay, ví dụ như `edge-maps to photo-realistic images`: input là một bức ảnh chỉ có cạnh viền, output là ảnh thực hoàn chỉnh. Ví dụ với <a href="{% link assets/ml_posts/gan/pix2pix.png %}"> ảnh</a> sau.
      <!-- Markdown way (bigger) -->
-    <!-- ![pix2pix]({{ "/assets/dl_posts/gan/pix2pix.png" | relative_url}}) -->
+    <!-- ![pix2pix]({{ "/assets/ml_posts/gan/pix2pix.png" | relative_url}}) -->
 
 1. [Progressively Growing of GANs for Improved Quality, Stability, and Variation — Karras et al (2017)](https://arxiv.org/abs/1710.10196)
     > Đây là một bài báo phải đọc vì các kết quả ấn tượng và cách tiếp cận sáng tạo cho lớp bài toán GAN. Bài báo này sử dụng kiến trúc multi-scale trong đó GAN xây dựng các layer có kích thước từ \\(4\times 4\\) cho đến \\(1024\times 1024\\). Sự không ổn định của GAN bị gia tăng phần lớn do kích thước của độ phân giải hình ảnh mục tiêu (target image resolution size), bài báo đã chỉ ra một cách giải quyết cho vấn đề này.
 
 1. [StackGAN — Zhang et al. (2017)](https://arxiv.org/abs/1612.03242)
-    > StackGAN thực sự độc đáo và khác biệt so với các chủ đề trước ở trong danh sách này. Mô hình này tương tự Conditional GANs và Progressively Growing GANs. Đối với Progressively Growing GANs, StackGAN làm việc giống theo nghĩa nó tương tác trên nhiều tỉ lệ (multiple scales). Đầu tiên, mô hình này outputs ra một bức ảnh \\(64\times 64\\) và sau đó nó sử dụng thông tin này như là thông tin biết trước (prior information) để sinh ra một bức ảnh có độ phân giải \\(256\times 256\\). StackGAN đặc biệt bởi vì nó có thể sinh ra ảnh từ văn bản (natural language text to image). Bài báo này rất thú vị để đọc và nó trở nên tuyệt vời khi thấy được sự kết hợp giữa việc kiểm soát được `latent space` (không gian ẩn) trong StyleGAN với giao diện ngôn ngữ tự nhiên được định nghĩa trong StackGAN. <a href="{% link assets/dl_posts/gan/stackgan.png %}"> Đây là mô phỏng kiến trúc mô hình</a>.
+    > StackGAN thực sự độc đáo và khác biệt so với các chủ đề trước ở trong danh sách này. Mô hình này tương tự Conditional GANs và Progressively Growing GANs. Đối với Progressively Growing GANs, StackGAN làm việc giống theo nghĩa nó tương tác trên nhiều tỉ lệ (multiple scales). Đầu tiên, mô hình này outputs ra một bức ảnh \\(64\times 64\\) và sau đó nó sử dụng thông tin này như là thông tin biết trước (prior information) để sinh ra một bức ảnh có độ phân giải \\(256\times 256\\). StackGAN đặc biệt bởi vì nó có thể sinh ra ảnh từ văn bản (natural language text to image). Bài báo này rất thú vị để đọc và nó trở nên tuyệt vời khi thấy được sự kết hợp giữa việc kiểm soát được `latent space` (không gian ẩn) trong StyleGAN với giao diện ngôn ngữ tự nhiên được định nghĩa trong StackGAN. <a href="{% link assets/ml_posts/gan/stackgan.png %}"> Đây là mô phỏng kiến trúc mô hình</a>.
 
 1. [CycleGAN — Zhu et al. (2018)](https://arxiv.org/abs/1703.10593)
     > CycleGAN tập trung vào bài toán image-to-image hơn là tổng hợp ảnh từ một véc tơ ngẫu nhiên. CycleGAN đặc biệt hơn khi xử lí chuyển đổi image-to-image khi chúng ta không có trong tay các cặp training samples (dữ liệu, nhãn). Bài báo này đề cập đến việc xây dựng hàm mất mát Cycle-Consistency và trực giác về cách huấn luyện GAN trở nên ổn định. Có nhiều ứng dụng hay được sử dụng với CycleGAN, như là `super-resolution`, `style transfer`, `horse to zebra`.
@@ -193,7 +193,7 @@ Như vậy, để tránh việc phải trả cho \\(B\\) nhiều hơn \\(\dfrac{
 - \\(f(x, \cdot): Y\rightarrow \mathbb{R}\\) là lồi khi cố định \\(x\\).
 Khi đó ta có \\[\max_{x} \min_{y} f(x, y)=\max_{y} \min_{x} f(x, y).\\] 
 
-Để có một cái nhìn khái quát hơn về Minimax, bạn có thể tìm hiểu thêm ở một tài liệu tổng hợp các phát biểu và chứng minh của lớp bài toán này (từ năm 1928 đến khoảng đầu những năm 2000), rất cụ thể tại [đây]({% link assets/dl_posts/gan/simons1995.pdf %}).
+Để có một cái nhìn khái quát hơn về Minimax, bạn có thể tìm hiểu thêm ở một tài liệu tổng hợp các phát biểu và chứng minh của lớp bài toán này (từ năm 1928 đến khoảng đầu những năm 2000), rất cụ thể tại [đây]({% link assets/ml_posts/gan/simons1995.pdf %}).
 
 Bây giờ, tôi sẽ chỉ trình bày định lý Minimax theo [Von Neumman](https://en.wikipedia.org/wiki/John_von_Neumann), một cách độc lập với tài liệu trên.
 ### Minimax theo Von Neumman
@@ -294,7 +294,7 @@ Trong khi tìm dữ liệu để viết bài này, tôi bắt gặp một [video
 
 Ý tưởng cơ bản của GAN là thiết lập một trò chơi hai người. Một trong số đó là `Generator`, Generator tạo ra các samples từ `latent space` (không gian ngầm, ẩn) có cùng phân phối với dữ liệu huấn luyện. Người chơi còn lại là `Discriminator`, người này đánh giá các samples và xác định xem sample là thật hay giả.
 
-{% include aligner.html images="dl_posts/gan/real_fake.png" %}
+{% include aligner.html images="ml_posts/gan/real_fake.png" %}
 
 Generator được huấn luyện để lừa Discriminator.
 
@@ -311,7 +311,7 @@ Nguyên liệu để làm tiền giả chính là nhiễu (noise), kí hiệu l�
 ### Latent space
 *If I have to describe latent space in one sentence, it simply means a representation of compressed data.*
 
-<!-- {% include aligner.html images="dl_posts/gan/digits.png" %} -->
+<!-- {% include aligner.html images="ml_posts/gan/digits.png" %} -->
 
 > Trong thống kê, `latent variables` (`Các biến tiềm ẩn`) là các biến không được quan sát trực tiếp nhưng được suy ra (thông qua mô hình toán học ) từ các biến khác được quan sát (đo trực tiếp). 
 
@@ -326,20 +326,20 @@ Tôi không tìm được một định nghĩa chính quy của Latent space (kh
 
 [Auto Encoder](https://en.wikipedia.org/wiki/Autoencoder) hoạt động thông qua việc: `Encoder` (bộ mã hóa) làm giảm kích thước dữ liệu qua các layer, đưa vào một `bottleneck` layer, sau đó `Decoder` (bộ giải mã) chuyển encoded input về lại kích thước ban đầu. Compressed data chính là data thuộc vào bottleneck layer.
 
-{% include aligner.html images="dl_posts/gan/latentspace2.png" %}
+{% include aligner.html images="ml_posts/gan/latentspace2.png" %}
 
 Ý tưởng của Latent space là quan trọng bởi vì nó là nhân tố chính của Deep Learning - học các đặc trưng của dữ liệu và đơn giản hóa các biểu diễn của dữ liệu cho mục đích tìm kiếm các mẫu.
 
 Ví dụ như trong bài toán [nhận dạng chữ số viết tay dữ liệu MNIST](https://www.kaggle.com/c/digit-recognizer/discussion/8327), ta phải huấn luyện để mô hình có thể nhận dạng được các chữ số khác nhau, cho dù chúng có thể có những đường nét khá giống nhau (chẳng hạn số \\(3\\) và số \\(8\\)). Trong lúc huấn luyện như vậy, ta đã làm cho mô hình *học được những nét tương đồng trong cấu trúc* giữa các ảnh với nhau, bằng cách tìm hiểu đặc trưng của mỗi chữ số (mỗi ảnh). Latent space có thể coi là một tập hợp các latent sample như hình dưới
 
-{% include aligner.html images="dl_posts/gan/latentspace3.png" %}
+{% include aligner.html images="ml_posts/gan/latentspace3.png" %}
 
 ### Kẻ lừa đảo (Generator) và Người cảnh sát (Discriminator)
 Để hiểu cụ thể phần này, tôi khuyến khích bạn đọc kỹ hướng dẫn trong [Deep Convolutional Generative Adversarial Network](https://www.tensorflow.org/tutorials/generative/dcgan), một tutorial trong GAN của Tensorflow.
 
 Hình dưới đây là sơ đồ cấu trúc hoạt động của GAN, để bạn có thể nắm được luồng di chuyển của data.
 
-![structure]({% link assets/dl_posts/gan/structure.png %})
+![structure]({% link assets/ml_posts/gan/structure.png %})
 
 Về mặt ký hiệu
 
@@ -365,7 +365,7 @@ Ngoài ra có thể hiểu về mặt toán học:
 
 - \\(D:\mathbb{X}\cup\mathbb{Y}\longrightarrow [0,1]\\) là một hàm xác suất đi từ không gian \\(\mathbb{Y}\\) hoặc không gian dữ liệu thật \\(\mathbb{X}\\), đại diện bởi một multilayer perceptron với các tham số \\(\theta_d\\). \\(D(x)\\) biểu diễn một xác suất thể hiện \\(x\\) đến từ dữ liệu thật chứ không phải từ \\(p_g\\).
 
-{% include aligner.html images="dl_posts/gan/struc2.png,dl_posts/gan/struc3.png"%}
+{% include aligner.html images="ml_posts/gan/struc2.png,ml_posts/gan/struc3.png"%}
 
 Bạn có thắc mắc tại sao \\(G\\) và \\(D\\) lại nhận đầu vào như vậy không ?
 
@@ -373,7 +373,7 @@ Câu trả lời rất đơn giản, bởi vì việc của \\(G\\) là sinh ra 
 
 Khi ta huấn luyện \\(G\\) thành công, \\(G\\) sẽ là một transformation như hình dưới đây.
 
-{% include aligner.html images="dl_posts/gan/G.png" %}
+{% include aligner.html images="ml_posts/gan/G.png" %}
 
 ## Các hàm mất mát (loss function)
 
@@ -384,7 +384,7 @@ Nói một cách khác, \\(G\\) và \\(D\\) đang chơi một trò chơi minimax
 \\[
     \displaystyle \min_{G} \max_{D} V(G,D) = \mathbb{E}_ {x \sim p_{data}(x) } [\log D(x)] + \mathbb{E}_ {z\sim p_{z}(z)}[\log (1-D(G(z)))].
 \\]
-Để hiểu kỹ công thức về phía bên phải dấu bằng, tôi khuyến khích bạn xem phần **Về cross-entropy trong Machine Learning**, trong bài [Entropy Trong Lý Thuyết Thông Tin]({%link _dl/2020-06-26-entropy.md %}).
+Để hiểu kỹ công thức về phía bên phải dấu bằng, tôi khuyến khích bạn xem phần **Về cross-entropy trong Machine Learning**, trong bài [Entropy Trong Lý Thuyết Thông Tin]({%link _ml/2020-06-26-entropy.md %}).
 
 Rõ ràng mục tiêu của Discriminator là maximize giá trị \\(D(x)\\) đối với những điểm dữ liệu \\(x\sim p_{data}(x)\\) và minimize \\(D(G(z))\\) đối với những điểm dữ liệu \\(z\sim p_z(z)\\), tức là maximize \\(1-D(G(z))\\). Để ý rằng \\(\max U\Leftrightarrow \max \log U, \forall 0< U \le 1\\). Do vậy, mục tiêu của \\(D\\) là maximize tổng 
 \\[\mathbb{E}_ {x \sim p_{data}(x) } [\log D(x)] + \mathbb{E}_ {z\sim p_{z}(z)}[\log (1-D(G(z)))] = V(G,D).\\]
@@ -454,7 +454,7 @@ Dấu bằng xảy ra khi và chỉ khi \\(p_g = p_{data}\\). Khi đó \\(C^* = 
 \\(~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare\\)
 
 ### Thuật toán GAN
-{% include aligner.html images="dl_posts/gan/algorithm.png" %}
+{% include aligner.html images="ml_posts/gan/algorithm.png" %}
 
 ### Mệnh đề về sự hội tụ trong GAN
 > Nếu \\(G\\) và \\(D\\) đủ năng lực cập nhật, và ở mỗi bước của thuật toán (I), Discriminator được tối ưu với \\(G\\) cho trước, và \\(p_g\\) được cập nhật để cải thiện C(G) thì \\(p_g\longrightarrow p_{data}\\). 

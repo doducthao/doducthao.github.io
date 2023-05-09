@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Lập Trình Một Mạng MLP Bằng Numpy 
+title: Lập Trình Một Mạng Multilayer Perceptron đơn giản
 subtitle: 
 color: RGB(132, 35, 23) 
 feature-img: assets/img/pexels/computer.jpeg
 excerpt_separator: 
-categories: [Programming]
+categories: [Neural Nets]
 tags: [tensorflow2, cross-entropy, mnist, MLP]
 date: August 22, 2020 
 comments: true
@@ -25,10 +25,7 @@ Bài này chủ yếu tôi tập trung vào code, không viết nhiều và khô
 import numpy as np
 import matplotlib.pyplot as plt
 %matplotlib inline
-import tensorflow as tf
-tf.__version__
 ```
-    '2.1.0'
 
 ### Mục tiêu 
 - Hiểu cách vận hành của một mạng fully connected nhiều lớp.
@@ -47,7 +44,6 @@ Về cơ bản, chẳng hạn ta có một sample \\(x=(x_1, x_2)\\), `hidden la
 ```python   
 # tạo véc tơ x là một tensor shape (1,2), giá trị lấy trong khoảng (-10, 10)
 # tạo bias = 1
-# seed ddể cố định việc tạo ra x, W_1 và W_2, phục vụ cho việc test ở sau.
 np.random.seed(1)
 x = np.random.randint(-10,10,(1,2))
 b = 1
@@ -382,7 +378,7 @@ BCE lợi thế hơn hẳn MSE vì nó là độ đo sai lệch giữa 2 phân b
 
 *Một lần nữa, bài viết không tập trung giải thích lý thuyết về gradient descent, nó khá dễ hiểu và cũng có nhiều tài liệu đã viết*.
 
-{% include aligner.html images="dl_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/gradient_descent.png" %}
+{% include aligner.html images="ml_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/gradient_descent.png" %}
 
 Trong giải thuật này, ta cần cập nhật 2 loại trọng số , đó là \\(W\\) và \\(b\\).
 
@@ -669,7 +665,7 @@ def plot(data):
 plot('losses')
 ```
 
-{% include aligner.html images="dl_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/output_55_0.png" %}
+{% include aligner.html images="ml_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/output_55_0.png" %}
 
 
 
@@ -677,7 +673,7 @@ plot('losses')
 plot('accuracies')
 ```
 
-{% include aligner.html images="dl_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/output_56_0.png" %}
+{% include aligner.html images="ml_posts/Customising Model Classification for MNIST dataset with TensorFlow 2/output_56_0.png" %}
 
 
 

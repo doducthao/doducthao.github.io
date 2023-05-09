@@ -113,13 +113,13 @@ Lúc này, do các \\(C_i\\) là rời nhau, các tập \\(A\cap C_i\\) cũng r�
  \\[A_{1}^{'}=A_{1}, \quad A_{i}^{'}=A_{i} \setminus\left(\bigcup_{j=1}^{i-1} A_{j}\right), \quad i=2,3, \ldots\\]
  Ở đây, hiểu \\(A\setminus B = A\cap B^{c}\\).
  Ta chứng tỏ các \\(A_i^{'}\\) rời nhau như sau
-\\[
-\begin{aligned}
-A_{i}^{'} \cap A_{k}^{'} &=\left\lbrace A_{i} \setminus\left(\bigcup_{j=1}^{i-1} A_{j}\right)\right\rbrace \cap\left\lbrace A_{k} \setminus\left(\bigcup_{j=1}^{k-1} A_{j}\right)\right\rbrace \\\
-&=\left\lbrace A_{i} \cap\left(\bigcup_{j=1}^{i-1} A_{j}\right)\right\rbrace \cap\left\lbrace A_{k} \cap\left(\bigcup_{j=1}^{k-1} A_{j}\right)\right\rbrace \\\
-&=\left\lbrace A_{i} \cap \bigcap_{j=1}^{i-1} A_{j}^{c}\right\rbrace \cap\left\lbrace A_{k} \cap \bigcap_{j=1}^{k-1} A_{j}^{c}\right\rbrace
-\end{aligned}
-\\]
+$$\begin{eqnarray*}
+A_{i}^{'} \cap A_{k}^{'} &=&\left\lbrace A_{i} \setminus\left(\bigcup_{j=1}^{i-1} A_{j}\right)\right\rbrace \cap\left\lbrace A_{k} \setminus\left(\bigcup_{j=1}^{k-1} A_{j}\right)\right\rbrace \\
+&=&\left\lbrace A_{i} \cap\left(\bigcup_{j=1}^{i-1} A_{j}\right)\right\rbrace \cap\left\lbrace A_{k} \cap\left(\bigcup_{j=1}^{k-1} A_{j}\right)\right\rbrace \\
+&=&\left\lbrace A_{i} \cap \bigcap_{j=1}^{i-1} A_{j}^{c}\right\rbrace \cap\left\lbrace A_{k} \cap \bigcap_{j=1}^{k-1} A_{j}^{c}\right\rbrace
+\end{eqnarray*}
+$$
+
  Dễ thấy rằng \\(\cup_{i=1}^{\infty} A_{i}^{'}=\cup_{i=1}^{\infty} A_{i}\\), do đó ta có 
  \\[P\left(\bigcup_{i=1}^{\infty} A_{i}\right)=P\left(\bigcup_{i=1}^{\infty} A_{i}^{'}\right)=\sum_{i=1}^{\infty} P\left(A_{i}^{'}\right)\\]
  Do \\(A_{i}^{'} \subset A_{i}\\) nên \\(P\left(A_{i}^{'}\right) \leq P\left(A_{i}\right)\\), thu được \\(\sum_{i=1}^{\infty} P\left(A_{i}^{'}\right) \leq \sum_{i=1}^{\infty} P\left(A_{i}\right)\\), kết thúc chứng minh.

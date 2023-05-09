@@ -1,1 +1,1 @@
-Welcome! You can find my blog at https://doducthao.github.io/
+My blog, https://doducthao.github.io/, is where I write some notes on AI/ML and Mathematics. I would be very happy if you find something useful.

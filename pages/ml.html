@@ -1,17 +1,17 @@
 ---
 layout: page
-title: Deep Learning
-subtitle: "Trước mắt là về Neural Networks và GAN"
-permalink: /dl/
+title: Machine Learning
+subtitle: "Neural Nets, GAN, Recommendation System, TimeSeries, NLP"
+permalink: /ml/
 feature-img: "assets/img/net.jpg"
 ---
 
-{% for cat in site.dl-list %}
+{% for cat in site.ml-list %}
 {% unless cat == 'personal writing' %}
 <div class=coll2>
 <h2 color=blue> {{ cat }} </h2>
 <ol>
-  {% for page in site.dl %}
+  {% for page in site.ml %}
       {% for pc in page.categories %}
         {% if pc == cat %}
           <li><a href="{{ page.url }}">{{ page.title }}</a></li>

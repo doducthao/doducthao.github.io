@@ -1,15 +1,15 @@
 # SITE CONFIGURATION
 baseurl: #"/Type-on-Strap"
 url: "https://doducthao.github.io"
-title: ai notes # site's title
-description: "A blog about Math and Deep Learning" # used by search engines
+title: AI Notes # site's title
+description: "A Blog About Math and Deep Learning" # used by search engines
 markdown: kramdown
 kramdown:
    math_engine: mathjax
 
 # THEME-SPECIFIC CONFIGURATION
-title: My notes  # blog's title
-avatar: assets/img/dl6.jpg
+title: My Notes  # blog's title
+avatar: assets/img/ml6.jpg
 favicon: assets/icons/ai1.png
 gravatar: # Email MD5 hash
 
@@ -62,7 +62,7 @@ collections:
   math:
     output: true
     permalink: /:collection/:path/:name
-  dl:
+  ml:
     output: true
     permalink: /:collection/:path/:name
   posts:
@@ -70,7 +70,7 @@ collections:
     permalink: /:collection/:path/:name
 
 math-list: [Analysis, Algebra, Probability-Statistics]
-dl-list: [Neural Networks, GAN, Programming]
+ml-list: [Neural Nets, GANs, Recommendation System, NLP, TimeSeries]
 
 # BUILD SETTINGS
 # markdown: kramdown
@@ -87,6 +87,6 @@ plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-relative-links]
 #   collections: true
 #theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
 exclude: ["Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", "LICENSE", "README.md", "screenshot.png", "package.json", "node_modules", "gulpfile.js", ".idea/*"]
-timezone: GMT+7.00 Asia/Saigon (ICT)
+timezone: Asia/Saigon
 future: true 
 
